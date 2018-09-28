@@ -9,4 +9,5 @@ Simple inventory system using GDScript.
 ![Scene Tree](https://i.imgur.com/dRXOB3a.png)
 
 **Panel** mouse filter set to *Ignore*.
+
 **GridContainer** mouse filter set to *Ignore*.
