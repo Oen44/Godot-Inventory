@@ -10,4 +10,4 @@ Simple inventory system using GDScript.
 
 **Panel** mouse filter set to *Ignore*.
 
-**GridContainer** mouse filter set to *Ignore*.
+**GridContainer** mouse filter set to *Pass*.
