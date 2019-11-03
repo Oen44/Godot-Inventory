@@ -69,7 +69,10 @@ func _gui_input(event):
 			if isClicked:
 				clickedSlot = slot;
 		
-		if holdingItem != null:
+		if holdingItem == null and clickedSlot == null:
+			return
+			
+		if holdingItem != null and clickedSlot != null:
 			if clickedSlot.item != null:
 				var tempItem = clickedSlot.item;
 				var oldSlot = slotList[slotList.find(holdingItem.itemSlot)];
