@@ -70,7 +70,10 @@ func _gui_input(event):
 				clickedSlot = slot;
 		
 		if holdingItem == null and clickedSlot == null:
-			return
+			return;
+		
+		if clickedSlot == null:
+			return;
 			
 		if holdingItem != null and clickedSlot != null:
 			if clickedSlot.item != null:
