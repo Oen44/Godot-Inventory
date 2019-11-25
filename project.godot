@@ -17,4 +17,4 @@ _global_script_class_icons={
 
 config/name="Inventory System Example"
 run/main_scene="res://Inventory.tscn"
-config/icon="res://icon.png"
+config/icon="res://Icon.png"
