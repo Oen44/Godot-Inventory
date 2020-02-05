@@ -1,6 +1,7 @@
 extends GridContainer;
-const ItemClass = preload("Item.gd");
+const ItemClass = preload("res://Item.gd");
 const ItemSlotClass = preload("res://ItemSlot.gd");
+const TooltipClass = preload("res://Tooltip.gd");
 
 const slotTexture = preload("res://images/skil.png");
 const itemImages = [
@@ -36,6 +37,7 @@ var slotList = Array();
 var itemList = Array();
 
 var holdingItem = null;
+onready var tooltip = get_node("../Tooltip");
 
 func _ready():
 	for item in itemDictionary:
@@ -46,6 +48,8 @@ func _ready():
 	
 	for i in range(20):
 		var slot = ItemSlotClass.new(i);
+		slot.connect("mouse_entered", self, "mouse_enter_slot", [slot]);
+		slot.connect("mouse_exited", self, "mouse_exit_slot", [slot]);
 		slotList.append(slot);
 		add_child(slot);
 	
@@ -53,7 +57,13 @@ func _ready():
 	slotList[1].setItem(itemList[1]);
 	slotList[2].setItem(itemList[2]);
 	
-	pass
+func mouse_enter_slot(_slot : ItemSlotClass):
+	if _slot.item:
+		tooltip.display(_slot.item, get_global_mouse_position());
+	
+func mouse_exit_slot(_slot : ItemSlotClass):
+	if tooltip.visible:
+		tooltip.hide();
 
 func _input(event):
 	if holdingItem != null && holdingItem.picked:
@@ -90,4 +100,3 @@ func _gui_input(event):
 			holdingItem = clickedSlot.item;
 			clickedSlot.pickItem();
 			holdingItem.rect_global_position = Vector2(event.position.x, event.position.y);
-	pass

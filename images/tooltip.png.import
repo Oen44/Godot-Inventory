@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/A_Armour02.png-36f5153095aa7e75e6e47807980fd7c2.stex"
+path="res://.import/tooltip.png-89bf5f9839bf04212ed42563a8421a39.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/A_Armour02.png"
-dest_files=[ "res://.import/A_Armour02.png-36f5153095aa7e75e6e47807980fd7c2.stex" ]
+source_file="res://images/tooltip.png"
+dest_files=[ "res://.import/tooltip.png-89bf5f9839bf04212ed42563a8421a39.stex" ]
 
 [params]
 
