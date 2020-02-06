@@ -36,8 +36,13 @@ const itemDictionary = {
 var slotList = Array();
 var itemList = Array();
 
+var topbarDrag = false;
+var topbarOffset = Vector2(0, 0);
+
 var holdingItem = null;
 onready var tooltip = get_node("../Tooltip");
+
+onready var inventoryPanel = get_parent();
 
 func _ready():
 	for item in itemDictionary:
@@ -57,19 +62,29 @@ func _ready():
 	slotList[1].setItem(itemList[1]);
 	slotList[2].setItem(itemList[2]);
 	
+	get_node("../TopBar").connect("gui_input", self, "gui_input_topbar");
+
+func gui_input_topbar(event : InputEvent):
+	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
+		topbarDrag = event.pressed;
+		topbarOffset = event.global_position - inventoryPanel.rect_global_position
+
 func mouse_enter_slot(_slot : ItemSlotClass):
 	if _slot.item:
 		tooltip.display(_slot.item, get_global_mouse_position());
-	
+
 func mouse_exit_slot(_slot : ItemSlotClass):
 	if tooltip.visible:
 		tooltip.hide();
 
-func _input(event):
+func _input(event : InputEvent):
 	if holdingItem != null && holdingItem.picked:
-		holdingItem.rect_global_position = Vector2(event.position.x, event.position.y);
+		holdingItem.rect_global_position = event.global_position;
+		
+	if topbarDrag:
+		inventoryPanel.rect_global_position = event.global_position - topbarOffset;
 
-func _gui_input(event):
+func _gui_input(event : InputEvent):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
 		var clickedSlot;
 		for slot in slotList:
@@ -84,7 +99,7 @@ func _gui_input(event):
 		
 		if clickedSlot == null:
 			return;
-			
+		
 		if holdingItem != null and clickedSlot != null:
 			if clickedSlot.item != null:
 				var tempItem = clickedSlot.item;
@@ -99,4 +114,4 @@ func _gui_input(event):
 		elif clickedSlot.item != null:
 			holdingItem = clickedSlot.item;
 			clickedSlot.pickItem();
-			holdingItem.rect_global_position = Vector2(event.position.x, event.position.y);
+			holdingItem.rect_global_position = event.global_position;

@@ -1,21 +1,49 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Inventory.gd" type="Script" id=1]
 [ext_resource path="res://Tooltip.gd" type="Script" id=2]
 [ext_resource path="res://images/tooltip.png" type="Texture" id=3]
 
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
+
 [node name="Node" type="Node"]
 
-[node name="Panel" type="Panel" parent="."]
-margin_right = 160.0
-margin_bottom = 200.0
+[node name="Inventory" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -80.0
+margin_top = -105.0
+margin_right = 80.0
+margin_bottom = 105.0
 mouse_filter = 2
 
-[node name="GridContainer" type="GridContainer" parent="Panel"]
+[node name="TopBar" type="Panel" parent="Inventory"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -80.0
+margin_right = 80.0
+margin_bottom = 20.0
+mouse_filter = 1
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Inventory/TopBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Inventory"
+align = 1
+valign = 1
+
+[node name="Slots" type="GridContainer" parent="Inventory"]
 margin_left = 6.0
-margin_top = 7.0
+margin_top = 22.0
 margin_right = 154.0
-margin_bottom = 193.0
+margin_bottom = 200.0
 columns = 4
 script = ExtResource( 1 )
 __meta__ = {
@@ -23,7 +51,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Tooltip" type="NinePatchRect" parent="Panel"]
+[node name="Tooltip" type="NinePatchRect" parent="Inventory"]
 visible = false
 margin_left = 103.0
 margin_top = 40.0
@@ -39,31 +67,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Item Name" type="RichTextLabel" parent="Panel/Tooltip"]
+[node name="Item Name" type="Label" parent="Inventory/Tooltip"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -59.0
 margin_top = 8.0
 margin_right = 59.0
 margin_bottom = 23.0
-bbcode_enabled = true
-bbcode_text = "[center]Item Name[/center]"
-tab_size = 0
 text = "Item Name"
-scroll_active = false
+align = 1
 
-[node name="Item Value" type="RichTextLabel" parent="Panel/Tooltip"]
+[node name="Item Value" type="Label" parent="Inventory/Tooltip"]
 anchor_left = 0.5
 anchor_right = 0.5
 margin_left = -59.0
 margin_top = 31.5323
 margin_right = 59.0
 margin_bottom = 46.5323
-bbcode_enabled = true
-bbcode_text = "Value: 0"
-tab_size = 0
 text = "Value: 0"
-scroll_active = false
-__meta__ = {
-"_edit_use_anchors_": false
-}
