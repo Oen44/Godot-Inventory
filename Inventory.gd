@@ -40,6 +40,7 @@ var topbarDrag = false;
 var topbarOffset = Vector2(0, 0);
 
 var holdingItem = null;
+var itemOffset = Vector2(0, 0);
 onready var tooltip = get_node("../Tooltip");
 
 onready var inventoryPanel = get_parent();
@@ -79,8 +80,8 @@ func mouse_exit_slot(_slot : ItemSlotClass):
 
 func _input(event : InputEvent):
 	if holdingItem != null && holdingItem.picked:
-		holdingItem.rect_global_position = event.global_position;
-		
+		holdingItem.rect_global_position = event.global_position - itemOffset;
+	
 	if topbarDrag:
 		inventoryPanel.rect_global_position = event.global_position - topbarOffset;
 
@@ -113,5 +114,6 @@ func _gui_input(event : InputEvent):
 				holdingItem = null;
 		elif clickedSlot.item != null:
 			holdingItem = clickedSlot.item;
+			itemOffset = event.global_position - holdingItem.rect_global_position;
 			clickedSlot.pickItem();
-			holdingItem.rect_global_position = event.global_position;
+			holdingItem.rect_global_position = event.global_position - itemOffset;
