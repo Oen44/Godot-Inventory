@@ -1,10 +1,15 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Inventory.gd" type="Script" id=1]
 [ext_resource path="res://Tooltip.gd" type="Script" id=2]
 [ext_resource path="res://images/tooltip.png" type="Texture" id=3]
+[ext_resource path="res://CharacterPanel.gd" type="Script" id=4]
+[ext_resource path="res://DraggableBar.gd" type="Script" id=5]
 
 [sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
+
+[sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.203922, 0.203922, 0.203922, 1 )
 
 [node name="Node" type="Node"]
@@ -19,6 +24,9 @@ margin_top = -105.0
 margin_right = 80.0
 margin_bottom = 105.0
 mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="TopBar" type="Panel" parent="Inventory"]
 anchor_left = 0.5
@@ -28,6 +36,7 @@ margin_right = 80.0
 margin_bottom = 20.0
 mouse_filter = 1
 custom_styles/panel = SubResource( 1 )
+script = ExtResource( 5 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -85,3 +94,35 @@ margin_top = 31.5323
 margin_right = 59.0
 margin_bottom = 46.5323
 text = "Value: 0"
+
+[node name="Character Panel" type="Panel" parent="."]
+margin_left = 211.0
+margin_top = 195.0
+margin_right = 394.0
+margin_bottom = 405.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopBar" type="Panel" parent="Character Panel"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -91.5
+margin_right = 91.5
+margin_bottom = 20.0
+custom_styles/panel = SubResource( 2 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Character Panel/TopBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+text = "Character Panel"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
