@@ -36,13 +36,10 @@ const itemDictionary = {
 var slotList = Array();
 var itemList = Array();
 
-var topbarDrag = false;
-var topbarOffset = Vector2(0, 0);
-
 var holdingItem = null;
 var itemOffset = Vector2(0, 0);
-onready var tooltip = get_node("../Tooltip");
 
+onready var tooltip = get_node("../Tooltip");
 onready var inventoryPanel = get_parent();
 
 func _ready():
@@ -62,13 +59,6 @@ func _ready():
 	slotList[0].setItem(itemList[0]);
 	slotList[1].setItem(itemList[1]);
 	slotList[2].setItem(itemList[2]);
-	
-	get_node("../TopBar").connect("gui_input", self, "gui_input_topbar");
-
-func gui_input_topbar(event : InputEvent):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT:
-		topbarDrag = event.pressed;
-		topbarOffset = event.global_position - inventoryPanel.rect_global_position
 
 func mouse_enter_slot(_slot : ItemSlotClass):
 	if _slot.item:
@@ -81,9 +71,6 @@ func mouse_exit_slot(_slot : ItemSlotClass):
 func _input(event : InputEvent):
 	if holdingItem != null && holdingItem.picked:
 		holdingItem.rect_global_position = event.global_position - itemOffset;
-	
-	if topbarDrag:
-		inventoryPanel.rect_global_position = event.global_position - topbarOffset;
 
 func _gui_input(event : InputEvent):
 	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
