@@ -165,8 +165,8 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = 154.0
 margin_top = -104.0
-margin_right = 334.0
-margin_bottom = 101.0
+margin_right = 343.0
+margin_bottom = 128.0
 mouse_filter = 1
 script = ExtResource( 1 )
 __meta__ = {
@@ -197,19 +197,32 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Slots" type="GridContainer" parent="Inventory"]
+[node name="SlotsContainer" type="ScrollContainer" parent="Inventory"]
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.887
 margin_left = 3.0
-margin_top = 25.0
+margin_top = 28.0
 margin_right = -3.0
-margin_bottom = -3.0
+margin_bottom = 0.215988
+scroll_horizontal_enabled = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Slots" type="GridContainer" parent="Inventory/SlotsContainer"]
 custom_constants/vseparation = 1
 custom_constants/hseparation = 1
 columns = 5
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="SortRarityButton" type="Button" parent="Inventory"]
+margin_left = 0.739502
+margin_top = 210.26
+margin_right = 96.7395
+margin_bottom = 230.26
+text = "Sort by Rarity"
 
 [node name="Tooltip" type="NinePatchRect" parent="."]
 visible = false
@@ -245,3 +258,17 @@ margin_top = 31.5323
 margin_right = 59.0
 margin_bottom = 46.5323
 text = "Value: 0"
+
+[node name="AddItemButton" type="Button" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -46.0
+margin_top = 29.0
+margin_right = 46.0
+margin_bottom = 62.0
+text = "Add Item"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Inventory/SortRarityButton" to="Inventory" method="_on_SortRarityButton_pressed"]
+[connection signal="pressed" from="AddItemButton" to="Inventory" method="_on_AddItemButton_pressed"]

@@ -4,7 +4,7 @@ const ItemClass = preload("res://Item.gd");
 const ItemSlotClass = preload("res://ItemSlot.gd");
 const TooltipClass = preload("res://Tooltip.gd");
 
-const MAX_SLOTS = 25;
+const MAX_SLOTS = 45;
 
 const itemImages = [
 	preload("res://images/Ac_Ring05.png"),
@@ -60,25 +60,7 @@ const itemDictionary = {
 		"itemValue": 756,
 		"itemIcon": itemImages[8],
 		"slotType": Global.SlotType.SLOT_NECK
-	},
-	7: {
-		"itemName": "Ring 2",
-		"itemValue": 432,
-		"itemIcon": itemImages[0],
-		"slotType": Global.SlotType.SLOT_RING
-	},
-	8: {
-		"itemName": "Sword 2",
-		"itemValue": 7106,
-		"itemIcon": itemImages[7],
-		"slotType": Global.SlotType.SLOT_LHAND
-	},
-	9: {
-		"itemName": "Ring 3",
-		"itemValue": 1047,
-		"itemIcon": itemImages[0],
-		"slotType": Global.SlotType.SLOT_RING
-	},
+	}
 };
 
 var slotList = Array();
@@ -98,7 +80,7 @@ func _ready():
 		var slotType = itemDictionary[item].slotType;
 		itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue, slotType));
 
-	var slots = get_node("Slots");
+	var slots = get_node("SlotsContainer/Slots");
 	for _i in range(MAX_SLOTS):
 		var slot = ItemSlotClass.new();
 		slot.connect("mouse_entered", self, "mouse_enter_slot", [slot]);
@@ -115,9 +97,6 @@ func _ready():
 			panelSlot.connect("mouse_entered", self, "mouse_enter_slot", [panelSlot]);
 			panelSlot.connect("mouse_exited", self, "mouse_exit_slot", [panelSlot]);
 			panelSlot.connect("gui_input", self, "slot_gui_input", [panelSlot]);
-
-	for i in range(10):
-		slotList[i].setItem(itemList[i]);
 
 func mouse_enter_slot(_slot : ItemSlotClass):
 	if _slot.item:
@@ -212,3 +191,29 @@ func canEquip(item, slot):
 	var ring = Global.SlotType.SLOT_RING;
 	var ring2 = Global.SlotType.SLOT_RING2;
 	return item.slotType == slot.slotType || item.slotType == ring && (slot.slotType == ring || slot.slotType == ring2);
+
+func _on_SortRarityButton_pressed():
+	var items = Array();
+	for slot in slotList:
+		if slot.item:
+			items.append(slot.item);
+			slot.removeItem();
+	items.sort_custom(self, "sortItemsByRarity");
+	for i in range(items.size()):
+		var item = items[i];
+		var slot = slotList[i];
+		slot.setItem(item);
+
+func sortItemsByRarity(itemA : ItemClass, itemB : ItemClass):
+	return itemA.rarity > itemB.rarity;
+
+func _on_AddItemButton_pressed():
+	var slot = getFreeSlot();
+	if slot:
+		var item = itemDictionary[randi() % itemDictionary.size()];
+		var itemName = item.itemName;
+		var itemIcon = item.itemIcon;
+		var itemValue = item.itemValue;
+		var slotType = item.slotType;
+		slot.setItem(ItemClass.new(itemName, itemIcon, null, itemValue, slotType));
+
