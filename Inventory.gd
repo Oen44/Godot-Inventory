@@ -13,7 +13,6 @@ const itemImages = [
 	preload("res://images/A_Shoes03.png"),
 	preload("res://images/C_Elm03.png"),
 	preload("res://images/E_Wood02.png"),
-	preload("res://images/P_Red02.png"),
 	preload("res://images/W_Sword001.png"),
 	preload("res://images/Ac_Necklace03.png"),
 ];
@@ -28,7 +27,7 @@ const itemDictionary = {
 	1: {
 		"itemName": "Sword",
 		"itemValue": 832,
-		"itemIcon": itemImages[7],
+		"itemIcon": itemImages[6],
 		"slotType": Global.SlotType.SLOT_LHAND
 	},
 	2: {
@@ -58,7 +57,7 @@ const itemDictionary = {
 	6: {
 		"itemName": "Necklace",
 		"itemValue": 756,
-		"itemIcon": itemImages[8],
+		"itemIcon": itemImages[7],
 		"slotType": Global.SlotType.SLOT_NECK
 	}
 };
