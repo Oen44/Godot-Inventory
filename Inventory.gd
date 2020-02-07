@@ -1,9 +1,11 @@
-extends GridContainer;
+extends Panel;
+
 const ItemClass = preload("res://Item.gd");
 const ItemSlotClass = preload("res://ItemSlot.gd");
 const TooltipClass = preload("res://Tooltip.gd");
 
-const slotTexture = preload("res://images/skil.png");
+const MAX_SLOTS = 25;
+
 const itemImages = [
 	preload("res://images/Ac_Ring05.png"),
 	preload("res://images/A_Armor05.png"),
@@ -12,24 +14,70 @@ const itemImages = [
 	preload("res://images/C_Elm03.png"),
 	preload("res://images/E_Wood02.png"),
 	preload("res://images/P_Red02.png"),
-	preload("res://images/W_Sword001.png")
+	preload("res://images/W_Sword001.png"),
+	preload("res://images/Ac_Necklace03.png"),
 ];
 
 const itemDictionary = {
 	0: {
 		"itemName": "Ring",
 		"itemValue": 456,
-		"itemIcon": itemImages[0]
+		"itemIcon": itemImages[0],
+		"slotType": Global.SlotType.SLOT_RING
 	},
 	1: {
 		"itemName": "Sword",
-		"itemValue": 100,
-		"itemIcon": itemImages[7]
+		"itemValue": 832,
+		"itemIcon": itemImages[7],
+		"slotType": Global.SlotType.SLOT_LHAND
 	},
 	2: {
-		"itemName": "Iron Ring",
-		"itemValue": 987,
-		"itemIcon": itemImages[0]
+		"itemName": "Armor",
+		"itemValue": 623,
+		"itemIcon": itemImages[2],
+		"slotType": Global.SlotType.SLOT_ARMOR
+	},
+	3: {
+		"itemName": "Helmet",
+		"itemValue": 12,
+		"itemIcon": itemImages[4],
+		"slotType": Global.SlotType.SLOT_HELMET
+	},
+	4: {
+		"itemName": "Boots",
+		"itemValue": 654,
+		"itemIcon": itemImages[3],
+		"slotType": Global.SlotType.SLOT_FEET
+	},
+	5: {
+		"itemName": "Shield",
+		"itemValue": 23,
+		"itemIcon": itemImages[5],
+		"slotType": Global.SlotType.SLOT_RHAND
+	},
+	6: {
+		"itemName": "Necklace",
+		"itemValue": 756,
+		"itemIcon": itemImages[8],
+		"slotType": Global.SlotType.SLOT_NECK
+	},
+	7: {
+		"itemName": "Ring 2",
+		"itemValue": 432,
+		"itemIcon": itemImages[0],
+		"slotType": Global.SlotType.SLOT_RING
+	},
+	8: {
+		"itemName": "Sword 2",
+		"itemValue": 7106,
+		"itemIcon": itemImages[7],
+		"slotType": Global.SlotType.SLOT_LHAND
+	},
+	9: {
+		"itemName": "Ring 3",
+		"itemValue": 1047,
+		"itemIcon": itemImages[0],
+		"slotType": Global.SlotType.SLOT_RING
 	},
 };
 
@@ -40,25 +88,36 @@ var holdingItem = null;
 var itemOffset = Vector2(0, 0);
 
 onready var tooltip = get_node("../Tooltip");
-onready var inventoryPanel = get_parent();
+onready var characterPanel = get_node("../CharacterPanel");
 
 func _ready():
 	for item in itemDictionary:
 		var itemName = itemDictionary[item].itemName;
 		var itemIcon = itemDictionary[item].itemIcon;
 		var itemValue = itemDictionary[item].itemValue;
-		itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue));
-	
-	for i in range(20):
-		var slot = ItemSlotClass.new(i);
+		var slotType = itemDictionary[item].slotType;
+		itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue, slotType));
+
+	var slots = get_node("Slots");
+	for _i in range(MAX_SLOTS):
+		var slot = ItemSlotClass.new();
 		slot.connect("mouse_entered", self, "mouse_enter_slot", [slot]);
 		slot.connect("mouse_exited", self, "mouse_exit_slot", [slot]);
+		slot.connect("gui_input", self, "slot_gui_input", [slot]);
 		slotList.append(slot);
-		add_child(slot);
-	
-	slotList[0].setItem(itemList[0]);
-	slotList[1].setItem(itemList[1]);
-	slotList[2].setItem(itemList[2]);
+		slots.add_child(slot);
+
+	for i in range(10):
+		if i == 0:
+			continue;
+		var panelSlot = characterPanel.slots[i];
+		if panelSlot:
+			panelSlot.connect("mouse_entered", self, "mouse_enter_slot", [panelSlot]);
+			panelSlot.connect("mouse_exited", self, "mouse_exit_slot", [panelSlot]);
+			panelSlot.connect("gui_input", self, "slot_gui_input", [panelSlot]);
+
+	for i in range(10):
+		slotList[i].setItem(itemList[i]);
 
 func mouse_enter_slot(_slot : ItemSlotClass):
 	if _slot.item:
@@ -68,39 +127,88 @@ func mouse_exit_slot(_slot : ItemSlotClass):
 	if tooltip.visible:
 		tooltip.hide();
 
+func slot_gui_input(event : InputEvent, slot : ItemSlotClass):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_LEFT && event.pressed:
+			if holdingItem:
+				if slot.slotType != Global.SlotType.SLOT_DEFAULT:
+					if canEquip(holdingItem, slot):
+						if !slot.item:
+							slot.equipItem(holdingItem, false);
+							holdingItem = null;
+						else:
+							var tempItem = slot.item;
+							slot.pickItem();
+							tempItem.rect_global_position = event.global_position - itemOffset;
+							slot.equipItem(holdingItem, false);
+							holdingItem = tempItem;
+				elif slot.item:
+					var tempItem = slot.item;
+					slot.pickItem();
+					tempItem.rect_global_position = event.global_position - itemOffset;
+					slot.putItem(holdingItem);
+					holdingItem = tempItem;
+				else:
+					slot.putItem(holdingItem);
+					holdingItem = null;
+			elif slot.item:
+				holdingItem = slot.item;
+				itemOffset = event.global_position - holdingItem.rect_global_position;
+				slot.pickItem();
+				holdingItem.rect_global_position = event.global_position - itemOffset;
+		elif event.button_index == BUTTON_RIGHT && !event.pressed:
+			if slot.slotType != Global.SlotType.SLOT_DEFAULT:
+				if slot.item:
+					var freeSlot = getFreeSlot();
+					if freeSlot:
+						var item = slot.item;
+						slot.removeItem();
+						freeSlot.setItem(item);
+			else:
+				if slot.item:
+					var itemSlotType = slot.item.slotType;
+					var panelSlot = characterPanel.getSlotByType(slot.item.slotType);
+					if itemSlotType == Global.SlotType.SLOT_RING:
+						if panelSlot[0].item && panelSlot[1].item:
+							var panelItem = panelSlot[0].item;
+							panelSlot[0].removeItem();
+							var slotItem = slot.item;
+							slot.removeItem();
+							slot.setItem(panelItem);
+							panelSlot[0].setItem(slotItem);
+							pass
+						elif !panelSlot[0].item && panelSlot[1].item || !panelSlot[0].item && !panelSlot[1].item:
+							var tempItem = slot.item;
+							slot.removeItem();
+							panelSlot[0].equipItem(tempItem);
+						elif panelSlot[0].item && !panelSlot[1].item:
+							var tempItem = slot.item;
+							slot.removeItem();
+							panelSlot[1].equipItem(tempItem);
+							pass
+					else:
+						if panelSlot.item:
+							var panelItem = panelSlot.item;
+							panelSlot.removeItem();
+							var slotItem = slot.item;
+							slot.removeItem();
+							slot.setItem(panelItem);
+							panelSlot.setItem(slotItem);
+						else:
+							var tempItem = slot.item;
+							slot.removeItem();
+							panelSlot.equipItem(tempItem);
+
 func _input(event : InputEvent):
-	if holdingItem != null && holdingItem.picked:
+	if holdingItem && holdingItem.picked:
 		holdingItem.rect_global_position = event.global_position - itemOffset;
 
-func _gui_input(event : InputEvent):
-	if event is InputEventMouseButton and event.button_index == BUTTON_LEFT and event.pressed:
-		var clickedSlot;
-		for slot in slotList:
-			var slotMousePos = slot.get_local_mouse_position();
-			var slotTexture = slot.texture;
-			var isClicked = slotMousePos.x >= 0 && slotMousePos.x <= slotTexture.get_width() && slotMousePos.y >= 0 && slotMousePos.y <= slotTexture.get_height();
-			if isClicked:
-				clickedSlot = slot;
-		
-		if holdingItem == null and clickedSlot == null:
-			return;
-		
-		if clickedSlot == null:
-			return;
-		
-		if holdingItem != null and clickedSlot != null:
-			if clickedSlot.item != null:
-				var tempItem = clickedSlot.item;
-				var oldSlot = slotList[slotList.find(holdingItem.itemSlot)];
-				clickedSlot.pickItem();
-				clickedSlot.putItem(holdingItem);
-				holdingItem = null;
-				oldSlot.putItem(tempItem);
-			else:
-				clickedSlot.putItem(holdingItem);
-				holdingItem = null;
-		elif clickedSlot.item != null:
-			holdingItem = clickedSlot.item;
-			itemOffset = event.global_position - holdingItem.rect_global_position;
-			clickedSlot.pickItem();
-			holdingItem.rect_global_position = event.global_position - itemOffset;
+func getFreeSlot():
+	for slot in slotList:
+		if !slot.item:
+			return slot;
+
+func canEquip(item, slot):
+	var ring = Global.SlotType.SLOT_RING;
+	var ring2 = Global.SlotType.SLOT_RING2;
+	return item.slotType == slot.slotType || item.slotType == ring && (slot.slotType == ring || slot.slotType == ring2);
