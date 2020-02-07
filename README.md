@@ -4,5 +4,7 @@
 Inventory system using GDScript, includes Character Panel and item equipping.
 
 # Preview
-![Inventory](https://i.imgur.com/idUi382.gif)
+![Inventory](https://i.imgur.com/hcOwBdx.png)
+![Inventory](https://i.imgur.com/UClmiHC.png)
+![Inventory](https://i.imgur.com/V7zTkYi.png)
 
