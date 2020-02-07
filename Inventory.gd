@@ -64,7 +64,6 @@ const itemDictionary = {
 };
 
 var slotList = Array();
-var itemList = Array();
 
 var holdingItem = null;
 var itemOffset = Vector2(0, 0);
@@ -73,13 +72,6 @@ onready var tooltip = get_node("../Tooltip");
 onready var characterPanel = get_node("../CharacterPanel");
 
 func _ready():
-	for item in itemDictionary:
-		var itemName = itemDictionary[item].itemName;
-		var itemIcon = itemDictionary[item].itemIcon;
-		var itemValue = itemDictionary[item].itemValue;
-		var slotType = itemDictionary[item].slotType;
-		itemList.append(ItemClass.new(itemName, itemIcon, null, itemValue, slotType));
-
 	var slots = get_node("SlotsContainer/Slots");
 	for _i in range(MAX_SLOTS):
 		var slot = ItemSlotClass.new();
