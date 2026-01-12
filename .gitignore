@@ -1,3 +1,5 @@
 # Godot
 /.import
 *.import
+.godot/
+/android/
