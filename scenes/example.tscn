@@ -1,0 +1,42 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyl4jq2qr5h8p"]
+
+[ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/InventoryModel.gd" id="1_pssa7"]
+[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/InventoryView.gd" id="2_7w8s4"]
+
+[node name="Example" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InventoryModel" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -458.0
+offset_top = 73.0
+offset_right = -152.0
+offset_bottom = 386.0
+grow_horizontal = 0
+script = ExtResource("1_pssa7")
+slots = 100
+inventory_view = NodePath("MarginContainer/ScrollContainer/InventoryView")
+
+[node name="MarginContainer" type="MarginContainer" parent="InventoryModel"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="InventoryModel/MarginContainer"]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="InventoryModel/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_7w8s4")
