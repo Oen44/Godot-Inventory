@@ -6,20 +6,10 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
-
-_global_script_classes=[ {
-"base": "Node",
-"class": "Global",
-"language": "GDScript",
-"path": "res://Global.gd"
-} ]
-_global_script_class_icons={
-"Global": ""
-}
+config_version=5
 
 [application]
 
 config/name="Inventory System Example"
-run/main_scene="res://Inventory.tscn"
+config/features=PackedStringArray("4.5")
 config/icon="res://Icon.png"
