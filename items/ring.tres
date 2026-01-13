@@ -7,5 +7,6 @@
 script = ExtResource("1_dyxe3")
 name = "Ring"
 icon = ExtResource("1_1ib1g")
+slot_type = 8
 max_stack = 1
 metadata/_custom_type_script = "uid://c6xipxmcp476u"

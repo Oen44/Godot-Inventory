@@ -6,6 +6,18 @@ extends Resource
 ## Attributes such as name, description, icon, and other
 ## properties are stored in this resource.
 
+enum SlotType {
+    NONE,
+    HEAD,
+    CHEST,
+    LEGS,
+    FEET,
+    WEAPON,
+    SHIELD,
+    NECK,
+    RING
+}
+
 enum ItemAttributes {
 	MIN_DAMAGE,
 	MAX_DAMAGE,
@@ -18,6 +30,7 @@ enum ItemAttributes {
 @export var icon: Texture2D
 
 @export_group("Properties")
+@export var slot_type: SlotType = SlotType.NONE
 @export var stackable: bool
 @export var max_stack: int
 @export var base_value: int

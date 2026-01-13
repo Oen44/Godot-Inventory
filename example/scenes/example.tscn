@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyl4jq2qr5h8p"]
+[gd_scene load_steps=7 format=3 uid="uid://cyl4jq2qr5h8p"]
 
 [ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/InventoryModel.gd" id="1_pssa7"]
 [ext_resource type="Script" uid="uid://0d3cu6kxwee5" path="res://example/scripts/ExampleShowcase.gd" id="1_u5lm8"]
 [ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/InventoryView.gd" id="2_7w8s4"]
 [ext_resource type="PackedScene" uid="uid://h655p864y720" path="res://scenes/inventory_system.tscn" id="2_o4y03"]
+[ext_resource type="Script" uid="uid://46gxrr5i6q3f" path="res://scripts/EquipmentModel.gd" id="5_u5lm8"]
+[ext_resource type="PackedScene" uid="uid://7oswlw660qvn" path="res://scenes/equipment_slot.tscn" id="6_ymkc3"]
 
 [node name="Example" type="Control" node_paths=PackedStringArray("inventory_system", "item_id_field", "create_item_btn")]
 layout_mode = 3
@@ -14,8 +16,8 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_u5lm8")
 inventory_system = NodePath("InventorySystem")
-item_id_field = NodePath("ItemIdField")
-create_item_btn = NodePath("CreateItemBtn")
+item_id_field = NodePath("HBoxContainer/ItemIdField")
+create_item_btn = NodePath("HBoxContainer/CreateItemBtn")
 
 [node name="InventorySystem" parent="." node_paths=PackedStringArray("player_inventory") instance=ExtResource("2_o4y03")]
 layout_mode = 1
@@ -51,20 +53,20 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_7w8s4")
 
-[node name="ItemIdField" type="LineEdit" parent="."]
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 391.0
-offset_top = 153.0
-offset_right = 543.5625
-offset_bottom = 184.0
+offset_left = 426.0
+offset_top = 40.0
+offset_right = 689.0
+offset_bottom = 80.0
+
+[node name="ItemIdField" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
 placeholder_text = "Item id"
 
-[node name="CreateItemBtn" type="Button" parent="."]
-layout_mode = 0
-offset_left = 552.0
-offset_top = 153.0
-offset_right = 651.0
-offset_bottom = 184.0
+[node name="CreateItemBtn" type="Button" parent="HBoxContainer"]
+layout_mode = 2
 text = "Create Item"
 
 [node name="StashChest" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
@@ -91,3 +93,81 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_7w8s4")
+
+[node name="PlayerEquipment" type="PanelContainer" parent="." node_paths=PackedStringArray("slots")]
+layout_mode = 0
+offset_left = 495.0
+offset_top = 234.0
+offset_right = 628.0
+offset_bottom = 393.0
+script = ExtResource("5_u5lm8")
+slots = {
+1: NodePath("MarginContainer/Control/VBoxContainer/Head"),
+2: NodePath("MarginContainer/Control/VBoxContainer/Chest"),
+3: NodePath("MarginContainer/Control/VBoxContainer/Legs"),
+4: NodePath("MarginContainer/Control/VBoxContainer/Feet"),
+5: NodePath("MarginContainer/Control/VBoxContainer2/Weapon"),
+6: NodePath("MarginContainer/Control/VBoxContainer2/Shield"),
+7: NodePath("MarginContainer/Control/VBoxContainer2/Neck"),
+8: NodePath("MarginContainer/Control/VBoxContainer2/Ring")
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerEquipment"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="Control" type="Control" parent="PlayerEquipment/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerEquipment/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 34.0
+grow_vertical = 2
+alignment = 1
+
+[node name="Head" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 1
+
+[node name="Chest" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 2
+
+[node name="Legs" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 3
+
+[node name="Feet" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 4
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="PlayerEquipment/MarginContainer/Control"]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -34.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Neck" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer2" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 7
+
+[node name="Ring" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer2" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 8
+
+[node name="Weapon" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer2" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 5
+
+[node name="Shield" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer2" instance=ExtResource("6_ymkc3")]
+layout_mode = 2
+slot_type = 6

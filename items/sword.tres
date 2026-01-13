@@ -7,6 +7,7 @@
 script = ExtResource("1_es5ut")
 name = "Sword"
 icon = ExtResource("1_bikib")
+slot_type = 5
 max_stack = 1
 base_value = 50
 metadata/_custom_type_script = "uid://c6xipxmcp476u"
