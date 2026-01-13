@@ -3,5 +3,6 @@
 [ext_resource type="Script" uid="uid://d3r6iu8y0fulq" path="res://scripts/InventorySlot.gd" id="1_dxvxp"]
 
 [node name="InventorySlot" type="Panel"]
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(34, 34)
+mouse_filter = 1
 script = ExtResource("1_dxvxp")

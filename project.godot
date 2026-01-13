@@ -10,6 +10,6 @@ config_version=5
 
 [application]
 
-config/name="Inventory System Example"
+config/name="Inventory System"
 config/features=PackedStringArray("4.5")
 config/icon="res://Icon.png"

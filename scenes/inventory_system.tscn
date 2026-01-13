@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://h655p864y720"]
+
+[ext_resource type="Script" uid="uid://hhainvr0xsdx" path="res://scripts/InventorySystem.gd" id="1_mvsc6"]
+[ext_resource type="Script" uid="uid://02i7n8gis7pc" path="res://scripts/InventoryItem.gd" id="2_4jpmu"]
+
+[node name="InventorySystem" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mvsc6")
+
+[node name="HeldItem" type="TextureRect" parent="."]
+visible = false
+z_index = 10
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_4jpmu")

@@ -1,0 +1,93 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyl4jq2qr5h8p"]
+
+[ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/InventoryModel.gd" id="1_pssa7"]
+[ext_resource type="Script" uid="uid://0d3cu6kxwee5" path="res://example/scripts/ExampleShowcase.gd" id="1_u5lm8"]
+[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/InventoryView.gd" id="2_7w8s4"]
+[ext_resource type="PackedScene" uid="uid://h655p864y720" path="res://scenes/inventory_system.tscn" id="2_o4y03"]
+
+[node name="Example" type="Control" node_paths=PackedStringArray("inventory_system", "item_id_field", "create_item_btn")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u5lm8")
+inventory_system = NodePath("InventorySystem")
+item_id_field = NodePath("ItemIdField")
+create_item_btn = NodePath("CreateItemBtn")
+
+[node name="InventorySystem" parent="." node_paths=PackedStringArray("player_inventory") instance=ExtResource("2_o4y03")]
+layout_mode = 1
+player_inventory = NodePath("../PlayerInventory")
+
+[node name="PlayerInventory" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -333.0
+offset_top = 141.0
+offset_right = -125.0
+offset_bottom = 454.0
+grow_horizontal = 0
+script = ExtResource("1_pssa7")
+id = "player_inventory"
+slots = 100
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerInventory"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="PlayerInventory/MarginContainer"]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="PlayerInventory/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_7w8s4")
+
+[node name="ItemIdField" type="LineEdit" parent="."]
+layout_mode = 0
+offset_left = 391.0
+offset_top = 153.0
+offset_right = 543.5625
+offset_bottom = 184.0
+placeholder_text = "Item id"
+
+[node name="CreateItemBtn" type="Button" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 153.0
+offset_right = 651.0
+offset_bottom = 184.0
+text = "Create Item"
+
+[node name="StashChest" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
+layout_mode = 0
+offset_right = 322.0
+offset_bottom = 648.0
+script = ExtResource("1_pssa7")
+id = "stash"
+slots = 200
+inventory_view = NodePath("MarginContainer/ScrollContainer/InventoryView")
+
+[node name="MarginContainer" type="MarginContainer" parent="StashChest"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="StashChest/MarginContainer"]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="StashChest/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_7w8s4")
