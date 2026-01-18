@@ -1,0 +1,39 @@
+[gd_scene load_steps=4 format=3 uid="uid://buf00tsvshh1a"]
+
+[ext_resource type="Script" uid="uid://cbjbd31qv061a" path="res://example/scripts/ExamplePlayer.gd" id="1_r2qdm"]
+[ext_resource type="PackedScene" uid="uid://cyl4jq2qr5h8p" path="res://example/scenes/example.tscn" id="1_wivwr"]
+[ext_resource type="Script" uid="uid://buen0tqcjflud" path="res://example/scripts/HealthComponent.gd" id="2_grndp"]
+
+[node name="ExampleGame" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="." groups=["Player"]]
+script = ExtResource("1_r2qdm")
+stats = Dictionary[String, Variant]({
+"max_life": 10
+})
+
+[node name="HealthComponent" type="Node" parent="Player"]
+script = ExtResource("2_grndp")
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Example" parent="GUI" node_paths=PackedStringArray("player_health", "health_label") instance=ExtResource("1_wivwr")]
+player_health = NodePath("../../Player/HealthComponent")
+health_label = NodePath("PlayerStats/MarginContainer/VBoxContainer/Life/Value")
+
+[node name="InventorySystem" parent="GUI/Example" index="0"]
+items_path = "res://example/items/"
+
+[node name="PlayerEquipment" parent="GUI/Example" index="2" node_paths=PackedStringArray("slots")]
+slots = {
+1: NodePath("MarginContainer/Control/VBoxContainer/Head"),
+2: NodePath("MarginContainer/Control/VBoxContainer/Chest"),
+3: NodePath("MarginContainer/Control/VBoxContainer/Legs"),
+4: NodePath("MarginContainer/Control/VBoxContainer/Feet"),
+5: NodePath("MarginContainer/Control/VBoxContainer2/Weapon"),
+6: NodePath("MarginContainer/Control/VBoxContainer2/Shield"),
+7: NodePath("MarginContainer/Control/VBoxContainer2/Neck"),
+8: NodePath("MarginContainer/Control/VBoxContainer2/Ring")
+}
+
+[editable path="GUI/Example"]

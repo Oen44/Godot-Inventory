@@ -1,10 +1,24 @@
 extends Control
 
 @export var inventory_system: InventorySystem
+@export var affix_pool: AffixPool
 @export var item_id_field: LineEdit
 @export var create_item_btn: Button
 
+@export var player_health: HealthComponent
+@export var health_label: Label
+
+var player: ExamplePlayer
+
 func _ready() -> void:
+	inventory_system.load_items()
+	affix_pool.load_affixes()
+
+	player = get_tree().get_first_node_in_group("Player")
+
+	player_health.health_changed.connect(_on_health_changed)
+	_on_health_changed(player_health._health, player_health._max_health)
+
 	create_item_btn.pressed.connect(_on_create_item_pressed)
 
 func _on_create_item_pressed() -> void:
@@ -19,3 +33,6 @@ func _on_create_item_pressed() -> void:
 		return
 	
 	inventory_system.player_inventory.create_item(base_item, 1)
+
+func _on_health_changed(health: int, max_health: int) -> void:
+	health_label.text = "%d / %d" % [health, max_health]

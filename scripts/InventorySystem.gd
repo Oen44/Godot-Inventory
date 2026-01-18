@@ -4,6 +4,8 @@ extends Control
 ##
 ## Handles base items and moving items between inventories.
 
+@export var items_path: String = "res://items/"
+@export var item_tooltip: ItemTooltip
 @export var player_inventory: InventoryModel
 
 @onready var held_item: InventoryItem = $HeldItem
@@ -12,15 +14,14 @@ var items: Dictionary[String, ItemBase] = {}
 
 func _ready():
 	held_item.visible = false
-	_load_items()
 
 func _input(event):
 	if event is InputEventMouseMotion and is_holding_item():
 		_move_held_item()
 
-## Loads all ItemBase resources from the "res://items/" directory.
-func _load_items():
-	var dir = DirAccess.open("res://items/")
+## Loads all ItemBase resources from the items_path directory.
+func load_items():
+	var dir = DirAccess.open(items_path)
 	if not dir:
 		push_error("Failed to open items directory.")
 		return
@@ -33,7 +34,7 @@ func _load_items():
 			continue
 
 		if file_name.ends_with(".tres") or file_name.ends_with(".res"):
-			var item_path = "res://items/" + file_name
+			var item_path = items_path + file_name
 			var item_resource = ResourceLoader.load(item_path)
 			if item_resource and item_resource is ItemBase:
 				if item_resource.is_valid():
@@ -72,7 +73,7 @@ func drop_held_item() -> void:
 	held_item.texture = null
 	held_item.visible = false
 
-func get_held_item() -> InventoryItem.Item:
+func get_held_item() -> Item:
 	return held_item.item
 
 func is_holding_item() -> bool:
@@ -80,3 +81,9 @@ func is_holding_item() -> bool:
 
 func _move_held_item() -> void:
 	held_item.position = get_global_mouse_position() - held_item.size / 2
+
+func on_item_hover(item: Item, hovered: bool) -> void:
+	if hovered:
+		item_tooltip.inspect(item)
+	else:
+		item_tooltip.hide()

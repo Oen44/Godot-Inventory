@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://dugvxrg1o2f2o"]
+
+[node name="NameSectionLabel" type="RichTextLabel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/default_color = Color(0.7711681, 0.53342223, 1.92523e-07, 1)
+bbcode_enabled = true
+fit_content = true
+scroll_active = false

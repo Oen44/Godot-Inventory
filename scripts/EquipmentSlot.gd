@@ -21,7 +21,7 @@ func get_equipment_item() -> InventoryItem:
 		return get_child(0)
 	return null
 
-func get_item() -> InventoryItem.Item:
+func get_item() -> Item:
 	var equipment_item = get_equipment_item()
 	if equipment_item:
 		return equipment_item.get_item()

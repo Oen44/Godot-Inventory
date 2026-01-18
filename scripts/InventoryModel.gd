@@ -12,10 +12,12 @@ extends Control
 @export var inventory_view: InventoryView ## (Optional) Reference to the InventoryView node
 
 var inventory_system: InventorySystem ## Reference to the main InventorySystem
+var affix_pool: AffixPool ## Reference to the AffixPool
 
-var items: Dictionary[int, InventoryItem.Item] = {} ## Maps slot index to InventoryItem
+var items: Dictionary[int, Item] = {} ## Maps slot index to InventoryItem
 
 func _ready():
+	await get_parent().ready
 	slots = max(slots, 1)
 
 	if not inventory_view:
@@ -25,9 +27,14 @@ func _ready():
 		push_error("InventoryModel (%s) has no InventoryView assigned or found as child." % id)
 		return
 
-	inventory_system = get_tree().get_current_scene().get_node_or_null("InventorySystem")
+	inventory_system = get_tree().get_first_node_in_group("InventorySystem")
 	if not inventory_system:
 		push_error("InventoryModel (%s) could not find InventorySystem in scene tree." % id)
+		return
+
+	affix_pool = get_tree().get_first_node_in_group("AffixPool")
+	if not affix_pool:
+		push_error("InventoryModel (%s) could not find AffixPool in scene tree." % id)
 		return
 
 	inventory_view.init(self)
@@ -74,8 +81,8 @@ func create_item(item_base: ItemBase, quantity: int = 1) -> bool:
 
 	var inventory_item = InventoryItem.new()
 	inventory_item.create_item(item_base, quantity)
-	items[empty_slot] = inventory_item.item
 	inventory_view.set_item(empty_slot, inventory_item)
+	_add_item(inventory_item, empty_slot)
 
 	return true
 
@@ -85,19 +92,19 @@ func create_item_at(slot_index: int, item_base: ItemBase, quantity: int = 1) -> 
 
 	var inventory_item = InventoryItem.new()
 	inventory_item.create_item(item_base, quantity)
-	items[slot_index] = inventory_item.item
 	inventory_view.set_item(slot_index, inventory_item)
+	_add_item(inventory_item, slot_index)
 
 	return true
 
-func add_item_at(item: InventoryItem.Item, slot_index: int) -> bool:
+func add_item_at(item: Item, slot_index: int) -> bool:
 	if items.has(slot_index):
 		return false
 
 	var inventory_item = InventoryItem.new()
 	inventory_item.set_item(item)
-	items[slot_index] = inventory_item.item
 	inventory_view.set_item(slot_index, inventory_item)
+	_add_item(inventory_item, slot_index, false)
 
 	return true
 
@@ -106,6 +113,20 @@ func remove_item_at(slot_index: int) -> void:
 		var slot: InventorySlot = inventory_view.get_child(slot_index)
 		slot.remove_item()
 		items.erase(slot_index)
+
+func _add_item(inventory_item: InventoryItem, slot_index: int, with_affixes: bool = true) -> void:
+	items[slot_index] = inventory_item.item
+	inventory_item.mouse_entered.connect(inventory_system.on_item_hover.bind(inventory_item.item, true))
+	inventory_item.mouse_exited.connect(inventory_system.on_item_hover.bind(inventory_item.item, false))
+
+	var item = inventory_item.get_item()
+	# Roll affixes for the item if applicable
+	if with_affixes:
+		var affixes = affix_pool.roll_affix_count(item)
+		for i in range(affixes):
+			var affix_instance = affix_pool.roll_affix(item)
+			if affix_instance:
+				item.add_affix(affix_instance)
 
 func _get_empty_slot() -> int:
 	for i in range(slots):
@@ -121,7 +142,7 @@ func _save() -> void:
 
 	var save_data: Dictionary = {}
 	for slot_index in items.keys():
-		var item: InventoryItem.Item = items[slot_index]
+		var item: Item = items[slot_index]
 		save_data[slot_index] = item.serialize()
 
 	file.store_var(save_data)

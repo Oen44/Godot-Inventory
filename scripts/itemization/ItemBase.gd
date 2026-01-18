@@ -18,12 +18,6 @@ enum SlotType {
     RING
 }
 
-enum ItemAttributes {
-	MIN_DAMAGE,
-	MAX_DAMAGE,
-	DEFENSE
-}
-
 @export_group("Basic Info")
 @export var name: String
 @export var description: String
@@ -36,7 +30,7 @@ enum ItemAttributes {
 @export var base_value: int
 
 @export_group("Base Attributes")
-@export var attributes: Dictionary[ItemAttributes, Variant] = {}
+@export var attributes: Dictionary[String, Variant] = {}
 
 var id: String: get = _get_id
 

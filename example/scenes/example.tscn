@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cyl4jq2qr5h8p"]
+[gd_scene load_steps=9 format=3 uid="uid://cyl4jq2qr5h8p"]
 
 [ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/InventoryModel.gd" id="1_pssa7"]
 [ext_resource type="Script" uid="uid://0d3cu6kxwee5" path="res://example/scripts/ExampleShowcase.gd" id="1_u5lm8"]
@@ -6,8 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://h655p864y720" path="res://scenes/inventory_system.tscn" id="2_o4y03"]
 [ext_resource type="Script" uid="uid://46gxrr5i6q3f" path="res://scripts/EquipmentModel.gd" id="5_u5lm8"]
 [ext_resource type="PackedScene" uid="uid://7oswlw660qvn" path="res://scenes/equipment_slot.tscn" id="6_ymkc3"]
+[ext_resource type="Script" uid="uid://bgffi58denc1f" path="res://scripts/tooltip/ItemTooltip.gd" id="7_2adls"]
+[ext_resource type="Script" uid="uid://cqhk4f1851u1i" path="res://scripts/itemization/AffixPool.gd" id="8_ooy5i"]
 
-[node name="Example" type="Control" node_paths=PackedStringArray("inventory_system", "item_id_field", "create_item_btn")]
+[node name="Example" type="Control" node_paths=PackedStringArray("inventory_system", "affix_pool", "item_id_field", "create_item_btn")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -16,11 +18,14 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_u5lm8")
 inventory_system = NodePath("InventorySystem")
+affix_pool = NodePath("AffixPool")
 item_id_field = NodePath("HBoxContainer/ItemIdField")
 create_item_btn = NodePath("HBoxContainer/CreateItemBtn")
 
-[node name="InventorySystem" parent="." node_paths=PackedStringArray("player_inventory") instance=ExtResource("2_o4y03")]
+[node name="InventorySystem" parent="." node_paths=PackedStringArray("item_tooltip", "player_inventory") groups=["InventorySystem"] instance=ExtResource("2_o4y03")]
 layout_mode = 1
+mouse_filter = 2
+item_tooltip = NodePath("../ItemTooltip")
 player_inventory = NodePath("../PlayerInventory")
 
 [node name="PlayerInventory" type="PanelContainer" parent="."]
@@ -28,10 +33,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -333.0
-offset_top = 141.0
-offset_right = -125.0
-offset_bottom = 454.0
+offset_left = -224.0
+offset_top = 135.0
+offset_right = -16.0
+offset_bottom = 448.0
 grow_horizontal = 0
 script = ExtResource("1_pssa7")
 id = "player_inventory"
@@ -53,53 +58,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource("2_7w8s4")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 426.0
-offset_top = 40.0
-offset_right = 689.0
-offset_bottom = 80.0
-
-[node name="ItemIdField" type="LineEdit" parent="HBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-placeholder_text = "Item id"
-
-[node name="CreateItemBtn" type="Button" parent="HBoxContainer"]
-layout_mode = 2
-text = "Create Item"
-
-[node name="StashChest" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
-layout_mode = 0
-offset_right = 322.0
-offset_bottom = 648.0
-script = ExtResource("1_pssa7")
-id = "stash"
-slots = 200
-inventory_view = NodePath("MarginContainer/ScrollContainer/InventoryView")
-
-[node name="MarginContainer" type="MarginContainer" parent="StashChest"]
-layout_mode = 2
-theme_override_constants/margin_left = 5
-theme_override_constants/margin_top = 5
-theme_override_constants/margin_right = 5
-theme_override_constants/margin_bottom = 5
-
-[node name="ScrollContainer" type="ScrollContainer" parent="StashChest/MarginContainer"]
-layout_mode = 2
-
-[node name="InventoryView" type="FlowContainer" parent="StashChest/MarginContainer/ScrollContainer"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource("2_7w8s4")
-
-[node name="PlayerEquipment" type="PanelContainer" parent="." node_paths=PackedStringArray("slots")]
-layout_mode = 0
-offset_left = 495.0
-offset_top = 234.0
-offset_right = 628.0
-offset_bottom = 393.0
+[node name="PlayerEquipment" type="PanelContainer" parent="." node_paths=PackedStringArray("slots") groups=["PlayerEquipment"]]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -468.0
+offset_top = 194.0
+offset_right = -335.0
+offset_bottom = 353.0
+grow_horizontal = 0
 script = ExtResource("5_u5lm8")
 slots = {
 1: NodePath("MarginContainer/Control/VBoxContainer/Head"),
@@ -171,3 +139,158 @@ slot_type = 5
 [node name="Shield" parent="PlayerEquipment/MarginContainer/Control/VBoxContainer2" instance=ExtResource("6_ymkc3")]
 layout_mode = 2
 slot_type = 6
+
+[node name="StashChest" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
+layout_mode = 1
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 322.0
+grow_vertical = 2
+script = ExtResource("1_pssa7")
+id = "stash"
+slots = 200
+inventory_view = NodePath("MarginContainer/ScrollContainer/InventoryView")
+
+[node name="MarginContainer" type="MarginContainer" parent="StashChest"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="StashChest/MarginContainer"]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="StashChest/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_7w8s4")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 7.0
+offset_right = 689.0
+offset_bottom = 47.0
+
+[node name="ItemIdField" type="LineEdit" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Item id"
+
+[node name="CreateItemBtn" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Create Item"
+
+[node name="ItemTooltip" type="Control" parent="." node_paths=PackedStringArray("container", "margin_container")]
+visible = false
+anchors_preset = 0
+offset_left = 556.0
+offset_top = 204.0
+offset_right = 617.0
+offset_bottom = 238.0
+script = ExtResource("7_2adls")
+container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
+margin_container = NodePath("PanelContainer/MarginContainer")
+max_width = 320
+
+[node name="PanelContainer" type="PanelContainer" parent="ItemTooltip"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="ItemTooltip/PanelContainer"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ItemTooltip/PanelContainer/MarginContainer"]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
+
+[node name="PlayerStats" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -181.0
+offset_right = 165.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerStats"]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerStats/MarginContainer"]
+layout_mode = 2
+
+[node name="Life" type="HBoxContainer" parent="PlayerStats/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerStats/MarginContainer/VBoxContainer/Life"]
+layout_mode = 2
+text = "Life: "
+
+[node name="Value" type="Label" parent="PlayerStats/MarginContainer/VBoxContainer/Life"]
+layout_mode = 2
+text = "0 / 0"
+
+[node name="AffixPool" type="Control" parent="." groups=["AffixPool"]]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("8_ooy5i")
+affixes_path = "res://example/items/affixes/"
+metadata/_custom_type_script = "uid://cqhk4f1851u1i"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 344.0
+offset_top = 208.0
+offset_right = 499.0
+offset_bottom = 260.0
+text = "Stash, like in Diablo or Path of Exile"
+autowrap_mode = 3
+
+[node name="Label2" type="Label" parent="."]
+layout_mode = 0
+offset_left = 681.0
+offset_top = 156.0
+offset_right = 833.0
+offset_bottom = 196.0
+text = "Player equipment"
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 958.0
+offset_top = 93.0
+offset_right = 1110.0
+offset_bottom = 133.0
+text = "Player inventory"
+autowrap_mode = 3
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 496.0
+offset_top = 426.0
+offset_right = 648.0
+offset_bottom = 454.0
+text = "Player stats"
+autowrap_mode = 3

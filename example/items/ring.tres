@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://bpjhvcr41pf0t"]
+
+[ext_resource type="Texture2D" uid="uid://c2oeeoys1brth" path="res://example/images/Ac_Ring05.png" id="1_1ib1g"]
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_dyxe3"]
+
+[resource]
+script = ExtResource("1_dyxe3")
+name = "Ring"
+icon = ExtResource("1_1ib1g")
+slot_type = 8
+max_stack = 1
+attributes = Dictionary[String, Variant]({
+"max_life": 5
+})
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

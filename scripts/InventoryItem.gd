@@ -5,22 +5,6 @@ extends TextureRect
 ## Every inventory item is based on ItemBase resource.
 ## Per item instance data is stored here.
 
-class Item:
-	var base: ItemBase
-	var quantity: int = 1
-
-	func _init(base_item: ItemBase, qty: int = 1):
-		base = base_item
-		quantity = qty
-
-	func serialize() -> Dictionary:
-		var item_data: Dictionary = {
-			"base_id": base.id,
-			"quantity": quantity
-		}
-
-		return item_data
-
 var item: Item = null
 
 func create_item(item_base: ItemBase, quantity: int = 1) -> void:

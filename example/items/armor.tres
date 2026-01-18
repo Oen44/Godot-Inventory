@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://7vm5cbuo08w8"]
+
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_6xtwl"]
+[ext_resource type="Texture2D" uid="uid://cghgasyemxacy" path="res://example/images/A_Armour02.png" id="1_gyc4v"]
+
+[resource]
+script = ExtResource("1_6xtwl")
+name = "Armor"
+description = "Iron body armor"
+icon = ExtResource("1_gyc4v")
+slot_type = 2
+max_stack = 1
+attributes = Dictionary[String, Variant]({
+"max_life": 25,
+"max_life_percent": 10
+})
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

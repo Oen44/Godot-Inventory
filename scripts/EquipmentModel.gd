@@ -4,14 +4,17 @@ extends Control
 ##
 ## Handles equipping and unequipping items.
 
+signal item_equipped(item: Item)
+signal item_unequipped(item: Item)
+
 @export var slots: Dictionary[ItemBase.SlotType, EquipmentSlot] = {}
 
 var inventory_system: InventorySystem ## Reference to the main InventorySystem
 
-var items: Dictionary[ItemBase.SlotType, InventoryItem.Item] = {} ## Maps slot type to equipped InventoryItem
+var items: Dictionary[ItemBase.SlotType, Item] = {} ## Maps slot type to equipped InventoryItem
 
 func _ready():
-	inventory_system = get_tree().get_current_scene().get_node_or_null("InventorySystem")
+	inventory_system = get_tree().get_first_node_in_group("InventorySystem")
 	if not inventory_system:
 		push_error("EquipmentModel could not find InventorySystem in scene tree.")
 		return
@@ -57,30 +60,36 @@ func create_item_at(slot_type: ItemBase.SlotType, item_base: ItemBase, quantity:
 
 	var equipment_item = InventoryItem.new()
 	equipment_item.create_item(item_base, quantity)
-	slots[slot_type].add_child(equipment_item)
-	items[slot_type] = equipment_item.item
+	_add_item(equipment_item, slot_type)
 
 	return true
 
-func add_item_at(item: InventoryItem.Item, slot_type: ItemBase.SlotType) -> bool:
+func add_item_at(item: Item, slot_type: ItemBase.SlotType) -> bool:
 	if items.has(slot_type):
 		return false
 	
 	if item.base.slot_type != slot_type:
 		return false
 
-	var inventory_item = InventoryItem.new()
-	inventory_item.set_item(item)
-	items[slot_type] = inventory_item.item
-	slots[slot_type].add_child(inventory_item)
+	var equipment_item = InventoryItem.new()
+	equipment_item.set_item(item)
+	_add_item(equipment_item, slot_type)
 
 	return true
 
 func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 	if items.has(slot_type):
+		item_unequipped.emit(items[slot_type])
 		var slot: EquipmentSlot = slots[slot_type]
 		slot.remove_item()
 		items.erase(slot_type)
+
+func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
+	items[slot_type] = equipment_item.item
+	slots[slot_type].add_child(equipment_item)
+	equipment_item.mouse_entered.connect(inventory_system.on_item_hover.bind(equipment_item.item, true))
+	equipment_item.mouse_exited.connect(inventory_system.on_item_hover.bind(equipment_item.item, false))
+	item_equipped.emit(equipment_item.item)
 
 func _save() -> void:
 	var save_path = "user://player_equipment.inv"
@@ -90,7 +99,7 @@ func _save() -> void:
 
 	var save_data: Dictionary = {}
 	for slot_type in items.keys():
-		var item: InventoryItem.Item = items[slot_type]
+		var item: Item = items[slot_type]
 		save_data[slot_type] = item.serialize()
 
 	file.store_var(save_data)

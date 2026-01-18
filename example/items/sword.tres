@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="ItemBase" load_steps=3 format=3 uid="uid://ca5dfyyq8o31c"]
 
-[ext_resource type="Texture2D" uid="uid://bhgw5qlgox7n" path="res://images/W_Sword001.png" id="1_bikib"]
-[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/ItemBase.gd" id="1_es5ut"]
+[ext_resource type="Texture2D" uid="uid://bhgw5qlgox7n" path="res://example/images/W_Sword001.png" id="1_bikib"]
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_es5ut"]
 
 [resource]
 script = ExtResource("1_es5ut")
@@ -10,4 +10,7 @@ icon = ExtResource("1_bikib")
 slot_type = 5
 max_stack = 1
 base_value = 50
+attributes = Dictionary[String, Variant]({
+"max_life": 10
+})
 metadata/_custom_type_script = "uid://c6xipxmcp476u"
