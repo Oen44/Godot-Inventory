@@ -82,8 +82,8 @@ func is_holding_item() -> bool:
 func _move_held_item() -> void:
 	held_item.position = get_global_mouse_position() - held_item.size / 2
 
-func on_item_hover(item: Item, hovered: bool) -> void:
+func on_item_hover(inventory_item: InventoryItem, hovered: bool) -> void:
 	if hovered:
-		item_tooltip.inspect(item)
+		item_tooltip.inspect(inventory_item)
 	else:
 		item_tooltip.hide()

@@ -87,8 +87,8 @@ func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
 	items[slot_type] = equipment_item.item
 	slots[slot_type].add_child(equipment_item)
-	equipment_item.mouse_entered.connect(inventory_system.on_item_hover.bind(equipment_item.item, true))
-	equipment_item.mouse_exited.connect(inventory_system.on_item_hover.bind(equipment_item.item, false))
+	equipment_item.mouse_entered.connect(inventory_system.on_item_hover.bind(equipment_item, true))
+	equipment_item.mouse_exited.connect(inventory_system.on_item_hover.bind(equipment_item, false))
 	item_equipped.emit(equipment_item.item)
 
 func _save() -> void:

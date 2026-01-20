@@ -127,8 +127,8 @@ func remove_item_at(slot_index: int) -> void:
 
 func _add_item(inventory_item: InventoryItem, slot_index: int, with_affixes: bool = true) -> void:
 	items[slot_index] = inventory_item.item
-	inventory_item.mouse_entered.connect(inventory_system.on_item_hover.bind(inventory_item.item, true))
-	inventory_item.mouse_exited.connect(inventory_system.on_item_hover.bind(inventory_item.item, false))
+	inventory_item.mouse_entered.connect(inventory_system.on_item_hover.bind(inventory_item, true))
+	inventory_item.mouse_exited.connect(inventory_system.on_item_hover.bind(inventory_item, false))
 
 	var item = inventory_item.get_item()
 	# Roll affixes for the item if applicable

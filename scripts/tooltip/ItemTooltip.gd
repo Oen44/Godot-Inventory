@@ -17,12 +17,13 @@ var sections: Array[TooltipSection] = [
 	DescriptionSection.new(),
 ]
 
-func inspect(item: Item) -> void:
+func inspect(inventory_item: InventoryItem) -> void:
 	visible = true
 
 	for child in container.get_children():
 		child.free()
 
+	var item = inventory_item.item
 	for section in sections:
 		if section.applies_to(item):
 			section.append(item, self)
@@ -30,18 +31,17 @@ func inspect(item: Item) -> void:
 	if margin_container:
 		size.y = margin_container.get_theme_constant("margin_top") + margin_container.get_theme_constant("margin_bottom")
 
-	display()
+	display(inventory_item.get_global_rect())
 
-func display():
+func display(rect: Rect2):
 	adjust_size()
 
-	var mouse_pos = get_viewport().get_mouse_position()
-	var new_pos = mouse_pos + Vector2(16, 16)
+	var new_pos = rect.position + Vector2(rect.size.x + 5, 0)
 	var screen_size = get_viewport_rect().size
 	if new_pos.x + size.x > screen_size.x:
-		new_pos.x = mouse_pos.x - size.x - 16
+		new_pos.x = rect.position.x - size.x - 5
 	if new_pos.y + size.y > screen_size.y:
-		new_pos.y = mouse_pos.y - size.y - 16
+		new_pos.y = screen_size.y - size.y
 	
 	global_position = new_pos
 
@@ -71,17 +71,20 @@ func adjust_size():
 	size.y = target_height
 
 func add_line(text: String, label_path: String = "") -> void:
+	var label_instance = null
+	
 	if not label_path.is_empty():
 		var label_scene = load(label_path)
-		var label_instance = label_scene.instantiate()
-		label_instance.text = text
-		container.add_child(label_instance)
+		label_instance = label_scene.instantiate()
 	else:
-		var label_instance = default_label.instantiate()
-		label_instance.text = text
-		container.add_child(label_instance)
+		label_instance = default_label.instantiate()
+	
+	label_instance.text = text
+	label_instance.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	container.add_child(label_instance)
 
 func add_spacer() -> void:
 	var spacer = Control.new()
+	spacer.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	spacer.custom_minimum_size = Vector2(0, 4)
 	container.add_child(spacer)

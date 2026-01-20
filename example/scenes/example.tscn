@@ -184,11 +184,13 @@ text = "Create Item"
 
 [node name="ItemTooltip" type="Control" parent="." node_paths=PackedStringArray("container", "margin_container")]
 visible = false
+z_index = 999
 anchors_preset = 0
 offset_left = 556.0
 offset_top = 204.0
 offset_right = 617.0
 offset_bottom = 238.0
+mouse_filter = 2
 script = ExtResource("7_2adls")
 container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
 margin_container = NodePath("PanelContainer/MarginContainer")
@@ -201,6 +203,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="ItemTooltip/PanelContainer"]
 layout_mode = 2
@@ -254,6 +257,7 @@ text = "0 / 0"
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
+mouse_filter = 2
 script = ExtResource("8_ooy5i")
 affixes_path = "res://example/items/affixes/"
 metadata/_custom_type_script = "uid://cqhk4f1851u1i"
