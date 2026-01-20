@@ -1,10 +1,10 @@
 [gd_scene load_steps=9 format=3 uid="uid://cyl4jq2qr5h8p"]
 
-[ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/InventoryModel.gd" id="1_pssa7"]
+[ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/inventory/InventoryModel.gd" id="1_pssa7"]
 [ext_resource type="Script" uid="uid://0d3cu6kxwee5" path="res://example/scripts/ExampleShowcase.gd" id="1_u5lm8"]
-[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/InventoryView.gd" id="2_7w8s4"]
+[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/inventory/InventoryView.gd" id="2_7w8s4"]
 [ext_resource type="PackedScene" uid="uid://h655p864y720" path="res://scenes/inventory_system.tscn" id="2_o4y03"]
-[ext_resource type="Script" uid="uid://46gxrr5i6q3f" path="res://scripts/EquipmentModel.gd" id="5_u5lm8"]
+[ext_resource type="Script" uid="uid://46gxrr5i6q3f" path="res://scripts/equipment/EquipmentModel.gd" id="5_u5lm8"]
 [ext_resource type="PackedScene" uid="uid://7oswlw660qvn" path="res://scenes/equipment_slot.tscn" id="6_ymkc3"]
 [ext_resource type="Script" uid="uid://bgffi58denc1f" path="res://scripts/tooltip/ItemTooltip.gd" id="7_2adls"]
 [ext_resource type="Script" uid="uid://cqhk4f1851u1i" path="res://scripts/itemization/AffixPool.gd" id="8_ooy5i"]
@@ -63,10 +63,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -468.0
-offset_top = 194.0
-offset_right = -335.0
-offset_bottom = 353.0
+offset_left = -395.0
+offset_top = 214.0
+offset_right = -262.0
+offset_bottom = 373.0
 grow_horizontal = 0
 script = ExtResource("5_u5lm8")
 slots = {
@@ -140,7 +140,7 @@ slot_type = 5
 layout_mode = 2
 slot_type = 6
 
-[node name="StashChest" type="PanelContainer" parent="." node_paths=PackedStringArray("inventory_view")]
+[node name="StashChest" type="PanelContainer" parent="."]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -149,7 +149,6 @@ grow_vertical = 2
 script = ExtResource("1_pssa7")
 id = "stash"
 slots = 200
-inventory_view = NodePath("MarginContainer/ScrollContainer/InventoryView")
 
 [node name="MarginContainer" type="MarginContainer" parent="StashChest"]
 layout_mode = 2
@@ -270,10 +269,10 @@ autowrap_mode = 3
 
 [node name="Label2" type="Label" parent="."]
 layout_mode = 0
-offset_left = 681.0
-offset_top = 156.0
-offset_right = 833.0
-offset_bottom = 196.0
+offset_left = 754.0
+offset_top = 176.0
+offset_right = 906.0
+offset_bottom = 216.0
 text = "Player equipment"
 autowrap_mode = 3
 

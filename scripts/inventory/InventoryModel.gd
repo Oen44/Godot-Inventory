@@ -9,19 +9,18 @@ extends Control
 
 @export var id: String = "inventory" ## Unique identifier for this inventory, used for saving.
 @export var slots: int = 20
-@export var inventory_view: InventoryView ## (Optional) Reference to the InventoryView node
 
 var inventory_system: InventorySystem ## Reference to the main InventorySystem
 var affix_pool: AffixPool ## Reference to the AffixPool
 
+var inventory_view: InventoryView
 var items: Dictionary[int, Item] = {} ## Maps slot index to InventoryItem
 
 func _ready():
 	await get_parent().ready
-	slots = max(slots, 1)
 
-	if not inventory_view:
-		inventory_view = _find_view(self)
+	slots = max(slots, 1)
+	inventory_view = _find_view(self)
 
 	if not inventory_view:
 		push_error("InventoryModel (%s) has no InventoryView assigned or found as child." % id)
@@ -94,6 +93,18 @@ func create_item_at(slot_index: int, item_base: ItemBase, quantity: int = 1) -> 
 	inventory_item.create_item(item_base, quantity)
 	inventory_view.set_item(slot_index, inventory_item)
 	_add_item(inventory_item, slot_index)
+
+	return true
+
+func add_item(item: Item) -> bool:
+	var empty_slot = _get_empty_slot()
+	if empty_slot == -1:
+		return false
+
+	var inventory_item = InventoryItem.new()
+	inventory_item.set_item(item)
+	inventory_view.set_item(empty_slot, inventory_item)
+	_add_item(inventory_item, empty_slot, false)
 
 	return true
 
