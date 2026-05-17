@@ -23,5 +23,4 @@ func _populate_slots() -> void:
 		add_child(slot_instance)
 
 func set_item(slot_index: int, item: InventoryItem) -> void:
-	var slot: InventorySlot = get_child(slot_index) as InventorySlot
-	slot.add_child(item)
+	get_child(slot_index).set_item(item)

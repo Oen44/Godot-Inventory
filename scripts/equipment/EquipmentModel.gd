@@ -29,26 +29,49 @@ func _exit_tree():
 	_save()
 
 func _on_slot_clicked(slot: EquipmentSlot) -> void:
-	var item = slot.get_equipment_item()
+	var equipment_item: InventoryItem = slot.get_equipment_item()
 	var slot_type = slot.slot_type
-	if item:
+	if equipment_item:
 		if inventory_system.is_holding_item(): ## Swap
 			var held_item = inventory_system.get_held_item()
 			if held_item.base.slot_type != slot_type:
+				return
+			
+			if stack_items(held_item, equipment_item.item):
+				if held_item.quantity == 0:
+					inventory_system.drop_held_item()
 				return
 			
 			inventory_system.drop_held_item()
 			remove_item_at(slot_type)
 
 			add_item_at(held_item, slot_type)
-			inventory_system.pick_up_item(item)
+			inventory_system.pick_up_item(equipment_item)
 		else: ## Pick up
-			inventory_system.pick_up_item(item)
+			inventory_system.pick_up_item(equipment_item)
 			remove_item_at(slot_type)
 	elif inventory_system.is_holding_item(): ## Place
 		var held_item = inventory_system.get_held_item()
 		if add_item_at(held_item, slot_type):
 			inventory_system.drop_held_item()
+
+## Stacks item A with item B, if item B can be stacked with item A
+func stack_items(item_a: Item, item_b: Item) -> bool:
+	if not item_a.base.stackable or not item_b.base.stackable:
+		return false
+	
+	if item_a.base.id != item_b.base.id:
+		return false
+	
+	if item_b.quantity >= item_a.base.max_stacks:
+		return false
+	
+	var missing_quant = item_b.base.max_stacks - item_b.quantity
+	var to_add = min(missing_quant, item_a.quantity)
+	item_b.set_quantity(item_b.quantity + to_add)
+	item_a.set_quantity(item_a.quantity - to_add)
+	
+	return true
 
 func create_item_at(slot_type: ItemBase.SlotType, item_base: ItemBase, quantity: int = 1) -> bool:
 	if not slots.has(slot_type):
@@ -86,7 +109,7 @@ func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 
 func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
 	items[slot_type] = equipment_item.item
-	slots[slot_type].add_child(equipment_item)
+	slots[slot_type].set_item(equipment_item)
 	equipment_item.mouse_entered.connect(inventory_system.on_item_hover.bind(equipment_item, true))
 	equipment_item.mouse_exited.connect(inventory_system.on_item_hover.bind(equipment_item, false))
 	item_equipped.emit(equipment_item.item)

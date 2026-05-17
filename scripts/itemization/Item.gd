@@ -1,4 +1,5 @@
 class_name Item
+extends RefCounted
 ## An item instance
 ##
 ## Contains a reference to its base item and unique affixes
@@ -7,6 +8,9 @@ signal changed
 
 var parent_inventory: String
 var base: ItemBase
+var id: String:
+	get:
+		return base.id
 var quantity: int = 1
 
 var affixes: Array[AffixInstance] = [] ## Array instead of Dictionary to preserve order
@@ -15,6 +19,10 @@ var _affix_id_to_index: Dictionary[String, int] = {} ## Maps affix IDs to their 
 func _init(base_item: ItemBase, qty: int = 1):
 	base = base_item
 	quantity = qty
+
+func set_quantity(new_quantity: int):
+	quantity = new_quantity
+	changed.emit()
 
 func roll_affixes():
 	var candidates = AffixPool.get_affixes_for(self)

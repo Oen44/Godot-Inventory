@@ -68,17 +68,20 @@ func _find_view(search_in: Control) -> InventoryView:
 	return null
 
 func _on_slot_clicked(slot: InventorySlot) -> void:
-	if config.contained:
-		if inventory_system.is_holding_item():
-			var held_item = inventory_system.get_held_item()
-			if held_item.parent_inventory != id and not config.whitelist.has(held_item.parent_inventory):
-				return
+	var held_item: Item = inventory_system.get_held_item()
+	if config.contained and inventory_system.is_holding_item():
+		if held_item.parent_inventory != id and not config.whitelist.has(held_item.parent_inventory):
+			return
 	
-	var inventory_item = slot.get_inventory_item()
+	var inventory_item: InventoryItem = slot.get_inventory_item()
 	var slot_id = slot.get_index()
 	if inventory_item:
 		if inventory_system.is_holding_item(): ## Swap
-			var held_item = inventory_system.get_held_item()
+			if stack_items(held_item, inventory_item.item):
+				if held_item.quantity == 0:
+					inventory_system.drop_held_item()
+				return
+
 			inventory_system.drop_held_item()
 			remove_item_at(slot_id)
 
@@ -88,9 +91,26 @@ func _on_slot_clicked(slot: InventorySlot) -> void:
 			inventory_system.pick_up_item(inventory_item)
 			remove_item_at(slot_id)
 	elif inventory_system.is_holding_item() and config.interactable: ## Place
-		var held_item = inventory_system.get_held_item()
 		add_item_at(held_item, slot.get_index())
 		inventory_system.drop_held_item()
+
+## Stacks item A with item B, if item B can be stacked with item A
+func stack_items(item_a: Item, item_b: Item) -> bool:
+	if not item_a.base.stackable or not item_b.base.stackable:
+		return false
+	
+	if item_a.base.id != item_b.base.id:
+		return false
+	
+	if item_b.quantity >= item_a.base.max_stacks:
+		return false
+	
+	var missing_quant = item_b.base.max_stacks - item_b.quantity
+	var to_add = min(missing_quant, item_a.quantity)
+	item_b.set_quantity(item_b.quantity + to_add)
+	item_a.set_quantity(item_a.quantity - to_add)
+	
+	return true
 
 func create_item(item_base: ItemBase, quantity: int = 1) -> bool:
 	if empty_slot == -1:
@@ -165,13 +185,14 @@ func _add_item(inventory_item: InventoryItem, slot_index: int, with_affixes: boo
 	item.parent_inventory = id
 	item_added.emit(item, slot_index)
 
-	empty_slot += 1
-	while items.has(empty_slot):
+	if empty_slot >= slot_index:
 		empty_slot += 1
+		while items.has(empty_slot):
+			empty_slot += 1
 
-		if empty_slot >= config.slots:
-			empty_slot = -1
-			break
+			if empty_slot >= config.slots:
+				empty_slot = -1
+				break
 
 func _save() -> void:
 	if not config.persistent:
