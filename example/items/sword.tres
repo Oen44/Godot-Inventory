@@ -10,7 +10,6 @@ script = ExtResource("1_es5ut")
 name = "Sword"
 icon = SubResource("CompressedTexture2D_i201u")
 slot_type = 5
-item_type = 4
 min_damage = 4
 max_damage = 8
 attack_speed = 1.2

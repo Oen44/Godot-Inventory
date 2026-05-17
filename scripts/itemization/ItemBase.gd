@@ -19,32 +19,20 @@ enum SlotType {
 	RING
 }
 
-enum ItemType {
-	HELMET,
-	BODY_ARMOR,
-	LEGGINGS,
-	BOOTS,
-	ONE_HANDED_SWORD,
-	SHIELD,
-	AMULET,
-	RING
-}
-
 @export_group("Basic Info")
 @export var name: String
 @export var description: String
 @export var icon: Texture2D
 
 @export_group("Properties")
-@export var slot_type: SlotType = SlotType.NONE
 @export var stackable: bool
 @export var max_stacks: int = 1
 @export var base_value: int
 
-@export_group("Item Type")
-@export var item_type: ItemType:
+@export_group("Equipment")
+@export var slot_type: SlotType:
 	set(value):
-		item_type = value
+		slot_type = value
 		notify_property_list_changed()
 
 ## conditional variables (_validate_property)
@@ -68,9 +56,9 @@ func is_valid() -> bool:
 	return not name.is_empty() and icon != null
 
 func _validate_property(property: Dictionary):
-	if property.name == "armor" and item_type not in [ItemType.HELMET, ItemType.BODY_ARMOR, ItemType.LEGGINGS, ItemType.BOOTS, ItemType.SHIELD]:
+	if property.name == "armor" and slot_type not in [SlotType.HEAD, SlotType.CHEST, SlotType.LEGS, SlotType.FEET, SlotType.SHIELD]:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
-	elif property.name in ["min_damage", "max_damage", "attack_speed"] and item_type not in [ItemType.ONE_HANDED_SWORD]:
+	elif property.name in ["min_damage", "max_damage", "attack_speed"] and slot_type not in [SlotType.WEAPON]:
 		property.usage = PROPERTY_USAGE_NO_EDITOR
-	elif property.name == "block_chance" and item_type != ItemType.SHIELD:
+	elif property.name == "block_chance" and slot_type != SlotType.SHIELD:
 		property.usage = PROPERTY_USAGE_NO_EDITOR

@@ -11,6 +11,5 @@ name = "Armor"
 description = "Iron body armor"
 icon = SubResource("CompressedTexture2D_31hq2")
 slot_type = 2
-item_type = 1
 armor = 4
 metadata/_custom_type_script = "uid://c6xipxmcp476u"
