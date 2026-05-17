@@ -8,11 +8,11 @@ Example project including scripts and nodes for building inventories, equipments
 
 ## Features
 
-- Slots for items
-- Universal inventory system
+- Universal inventory system (player inventory, stash, NPC trade etc.)
 - Equipment system
 - Itemization system
-- Editor tool for managing and creating items
+- Affixes system
+- Item tooltip system
 
 ## Work in progress
 
