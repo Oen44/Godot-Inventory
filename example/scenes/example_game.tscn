@@ -24,7 +24,7 @@ health_label = NodePath("PlayerStats/MarginContainer/VBoxContainer/Life/Value")
 
 [node name="InventorySystem" parent="GUI/Example" index="0" unique_id=376500160 node_paths=PackedStringArray("player_inventory")]
 items_path = "res://example/items/"
-affixes_path = "res://example/items/affixes/"
+affixes_path = "res://example/affixes/"
 player_inventory = NodePath("../PlayerInventory")
 
 [node name="PlayerEquipment" parent="GUI/Example" index="3" unique_id=134121884 node_paths=PackedStringArray("slots")]
