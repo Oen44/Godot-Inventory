@@ -2,17 +2,20 @@ class_name InventorySystem
 extends Control
 ## Main system for controlling the inventory.
 ##
-## Handles base items and moving items between inventories.
+## Handles base _items and moving _items between inventories.
 
 @export var items_path: String = "res://items/"
+@export var affixes_path: String = "res://items/affixes/"
 @export var item_tooltip: ItemTooltip
 @export var player_inventory: InventoryModel
 
 @onready var held_item: InventoryItem = $HeldItem
 
-var items: Dictionary[String, ItemBase] = {}
+static var _items: Dictionary[String, ItemBase] = {}
 
 func _ready():
+	_load_items()
+	AffixPool.load_affixes(affixes_path)
 	held_item.visible = false
 
 func _input(event):
@@ -20,10 +23,10 @@ func _input(event):
 		_move_held_item()
 
 ## Loads all ItemBase resources from the items_path directory.
-func load_items():
+func _load_items():
 	var dir = DirAccess.open(items_path)
 	if not dir:
-		push_error("Failed to open items directory.")
+		push_error("Failed to open _items directory.")
 		return
 
 	dir.list_dir_begin()
@@ -38,7 +41,7 @@ func load_items():
 			var item_resource = ResourceLoader.load(item_path)
 			if item_resource and item_resource is ItemBase:
 				if item_resource.is_valid():
-					items[item_resource.id] = item_resource
+					InventorySystem._items[item_resource.id] = item_resource
 				else:
 					push_warning("Invalid ItemBase in %s" % item_path)
 			else:
@@ -47,11 +50,11 @@ func load_items():
 		file_name = dir.get_next()
 
 	dir.list_dir_end()
-	print("Loaded %d base items." % items.size())
+	print("Loaded %d base _items." % InventorySystem._items.size())
 
 ## Retrieves a base item by its ID.
-func get_item_base(item_id: String) -> ItemBase:
-	return items.get(item_id)
+static func get_item_base(item_id: String) -> ItemBase:
+	return _items.get(item_id)
 
 ## Picks up an item to be held by the cursor.
 func pick_up_item(inventory_item: InventoryItem) -> void:

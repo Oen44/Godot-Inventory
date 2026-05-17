@@ -9,8 +9,4 @@ func can_apply_to(_item: Item) -> bool:
 
 func roll(_item: Item) -> AffixInstance:
 	var value := randi_range(min_value, max_value)
-	return AffixInstance.new(
-		self,
-		["+%d Life" % value],
-		[StatModifier.new("max_life", value)]
-	)
+	return AffixInstance.new(id, [value])

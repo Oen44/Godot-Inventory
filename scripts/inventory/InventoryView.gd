@@ -16,7 +16,7 @@ func _populate_slots() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	for i in inventory_model.slots:
+	for i in inventory_model.config.slots:
 		var slot_instance: InventorySlot = INVENTORY_SLOT_SCENE.instantiate()
 		slot_instance.name = "Slot_%d" % i
 		slot_instance.slot_clicked.connect(inventory_model._on_slot_clicked)

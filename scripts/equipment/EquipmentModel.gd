@@ -114,9 +114,11 @@ func _load() -> void:
 	var save_data: Dictionary = file.get_var()
 	for slot_type in save_data.keys():
 		var item_data: Dictionary = save_data[slot_type]
-		var item_base: ItemBase = inventory_system.get_item_base(item_data["base_id"])
+		var item_base: ItemBase = InventorySystem.get_item_base(item_data["base_id"])
 		if item_base:
-			create_item_at(slot_type, item_base, item_data["quantity"])
+			var item = Item.new(item_base, item_data["quantity"])
+			item.deserialize(item_data)
+			add_item_at(item, int(slot_type))
 		else:
 			push_warning("Base item with ID %s not found while loading equipment." % item_data["base_id"])
 

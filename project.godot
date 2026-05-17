@@ -12,5 +12,5 @@ config_version=5
 
 config/name="Inventory System"
 run/main_scene="uid://buf00tsvshh1a"
-config/features=PackedStringArray("4.5")
+config/features=PackedStringArray("4.7")
 config/icon="res://Icon.png"

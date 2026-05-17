@@ -9,13 +9,21 @@ extends Control
 @export var max_width: int = 300
 @export var default_label: PackedScene = preload("res://scripts/tooltip/sections/labels/DefaultTooltipLabel.tscn")
 
+var _show_advanced: bool = false
+
 var sections: Array[TooltipSection] = [
 	NameSection.new(),
 	SlotSection.new(),
-	StatsSection.new(),
+	BaseStatsSection.new(),
 	AffixesSection.new(),
 	DescriptionSection.new(),
 ]
+
+func _unhandled_key_input(event):
+	if event is InputEventKey:
+		if event.keycode == Key.KEY_ALT:
+			if _show_advanced != event.pressed:
+				_show_advanced = event.pressed
 
 func inspect(inventory_item: InventoryItem) -> void:
 	visible = true

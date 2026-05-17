@@ -1,7 +1,6 @@
 extends Control
 
 @export var inventory_system: InventorySystem
-@export var affix_pool: AffixPool
 @export var item_id_field: LineEdit
 @export var create_item_btn: Button
 
@@ -11,9 +10,6 @@ extends Control
 var player: ExamplePlayer
 
 func _ready() -> void:
-	inventory_system.load_items()
-	affix_pool.load_affixes()
-
 	player = get_tree().get_first_node_in_group("Player")
 
 	player_health.health_changed.connect(_on_health_changed)
@@ -27,7 +23,7 @@ func _on_create_item_pressed() -> void:
 		push_warning("Item ID field is empty.")
 		return
 	
-	var base_item = inventory_system.get_item_base(item_id)
+	var base_item = InventorySystem.get_item_base(item_id)
 	if not base_item:
 		push_warning("No base item found with ID: %s" % item_id)
 		return
