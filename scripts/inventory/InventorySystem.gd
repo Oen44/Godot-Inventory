@@ -3,15 +3,15 @@ extends Control
 ##
 ## Handles base _items and moving _items between inventories.
 
-signal inventory_registered(inventory: InventoryModel)
-signal inventory_unregistered(inventory: InventoryModel)
+signal inventory_registered(inventory: InventoryModel) # Emitted when a new inventory is registered with the system.
+signal inventory_unregistered(inventory: InventoryModel) # Emitted when an inventory is unregistered from the system.
 
-@export var items_path: String = "res://items/"
-@export var player_inventory: String = "player_inventory"
-@export var default_currency: ItemBase
+@export var items_path: String = "res://items/" # Directory where ItemBase resources are located.
+@export var player_inventory: String = "player_inventory" # ID of the player's inventory.
+@export var default_currency: ItemBase # Default currency item to use in the system.
 
-@export var held_item: InventoryItem
-@export var held_item_quantity: Label
+@export var held_item: InventoryItem # UI element that follows the cursor when holding an item.
+@export var held_item_quantity: Label # Label to show the quantity of the held item if it's stackable.
 
 var _items: Dictionary[String, ItemBase] = {}
 var _currency_item: ItemBase = null
@@ -34,6 +34,7 @@ func _input(event):
 	if event is InputEventMouseMotion and is_holding_item():
 		_move_held_item()
 
+## Registers a new inventory with the system.
 func register_inventory(inventory: InventoryModel) -> void:
 	if _inventories.has(inventory.id):
 		push_warning("Inventory with ID %s is already registered." % inventory.id)
@@ -41,6 +42,7 @@ func register_inventory(inventory: InventoryModel) -> void:
 	_inventories[inventory.id] = inventory
 	inventory_registered.emit(inventory)
 
+## Unregisters an inventory from the system.
 func unregister_inventory(inventory: InventoryModel) -> void:
 	if not _inventories.has(inventory.id):
 		push_warning("Inventory with ID %s is not registered." % inventory.id)
@@ -48,9 +50,11 @@ func unregister_inventory(inventory: InventoryModel) -> void:
 	_inventories.erase(inventory.id)
 	inventory_unregistered.emit(inventory)
 
+## Retrieves an inventory by its ID.
 func get_inventory(inventory_id: String) -> InventoryModel:
 	return _inventories.get(inventory_id)
 
+## Convenience method for accessing the player's inventory
 func get_player_inventory() -> InventoryModel:
 	return get_inventory(player_inventory)
 

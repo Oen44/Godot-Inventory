@@ -4,16 +4,21 @@
 
 ## About
 
-Example project including scripts and nodes for building inventories, equipments and all sorts of containers for items.
+Example project including scripts and nodes for building inventories, equipments, NPC trading and all sorts of containers for items.
 
 ## Features
 
-- Universal inventory system (player inventory, stash, NPC trade etc.)
+- Universal inventory system
 - Equipment system
 - Itemization system
 - Affixes system
 - Item tooltip system
+- Vendor (NPC trading) system
 
-## Work in progress
+## Example
 
-This branch is currently in development, unless you know what you are doing, please wait for v2 to be merged with master for official release. Otherwise feel free to test it out, join in and help build it to perfection.
+Checkout [Example](example) scene for a quick glance on how the system works.
+
+## API Docs
+
+Visit [Wiki](wiki) for documentation.
