@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://54eaqqo2ey7d"]
+
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_dyxe3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_ga3wo"]
+load_path = "res://.godot/imported/Ac_Ring05.png-32fc6d9656a6537a7f9373e0f911aef4.ctex"
+
+[resource]
+script = ExtResource("1_dyxe3")
+name = "Ring"
+description = "Ring with a ruby"
+icon = SubResource("CompressedTexture2D_ga3wo")
+base_value = 15
+slot_type = 8
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

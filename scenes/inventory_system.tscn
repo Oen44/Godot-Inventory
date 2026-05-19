@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://h655p864y720"]
+
+[ext_resource type="Script" uid="uid://hhainvr0xsdx" path="res://scripts/inventory/InventorySystem.gd" id="1_mvsc6"]
+[ext_resource type="Script" uid="uid://02i7n8gis7pc" path="res://scripts/inventory/InventoryItem.gd" id="2_4jpmu"]
+[ext_resource type="Resource" uid="uid://cr16lbejq16hh" path="res://example/items/gold_coin.tres" id="2_pr0hw"]
+
+[node name="InventorySystem" type="Control" unique_id=1876887705 node_paths=PackedStringArray("held_item", "held_item_quantity")]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_mvsc6")
+items_path = "res://example/items/"
+default_currency = ExtResource("2_pr0hw")
+held_item = NodePath("HeldItem")
+held_item_quantity = NodePath("HeldItem/MarginContainer/Label")
+
+[node name="HeldItem" type="TextureRect" parent="." unique_id=1677763463]
+visible = false
+z_index = 10
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+script = ExtResource("2_4jpmu")
+
+[node name="MarginContainer" type="MarginContainer" parent="HeldItem" unique_id=2017046737]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="HeldItem/MarginContainer" unique_id=1268541923]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 2
+vertical_alignment = 2

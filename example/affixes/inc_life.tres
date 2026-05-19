@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="IncLifeAffix" format=3 uid="uid://uexotkrrbwul"]
+
+[ext_resource type="Script" uid="uid://blwg8jfiqd87w" path="res://scripts/itemization/affixes/inc_life.gd" id="1_3ag2u"]
+
+[resource]
+script = ExtResource("1_3ag2u")
+id = "inc_life"
+description = "#% increased maximum Life"
+weight = 25
+price_multiplier = 2.0
+metadata/_custom_type_script = "uid://blwg8jfiqd87w"

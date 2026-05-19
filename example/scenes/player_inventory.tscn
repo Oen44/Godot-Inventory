@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://dx4lqmsnb6857"]
+
+[ext_resource type="Script" uid="uid://wpiv8l8jiu8x" path="res://scripts/inventory/InventoryModel.gd" id="1_rkloe"]
+[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/inventory/InventoryView.gd" id="2_8udvl"]
+
+[node name="PlayerInventory" type="PanelContainer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -224.0
+offset_top = 135.0
+offset_right = -16.0
+offset_bottom = 448.0
+grow_horizontal = 0
+script = ExtResource("1_rkloe")
+id = "player_inventory"
+slots = 100
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("2_8udvl")

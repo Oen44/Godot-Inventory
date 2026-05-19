@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://buf00tsvshh1a"]
+
+[ext_resource type="Script" uid="uid://cbjbd31qv061a" path="res://example/scripts/ExamplePlayer.gd" id="1_r2qdm"]
+[ext_resource type="PackedScene" uid="uid://cyl4jq2qr5h8p" path="res://example/scenes/example.tscn" id="1_wivwr"]
+[ext_resource type="Script" uid="uid://buen0tqcjflud" path="res://example/scripts/HealthComponent.gd" id="2_grndp"]
+
+[node name="ExampleGame" type="Node2D" unique_id=2103362733]
+
+[node name="Player" type="Node2D" parent="." unique_id=1200678361 node_paths=PackedStringArray("health_component", "equipment") groups=["Player"]]
+script = ExtResource("1_r2qdm")
+stats = Dictionary[String, Variant]({
+"max_life": 100
+})
+health_component = NodePath("HealthComponent")
+equipment = NodePath("../GUI/Example/PlayerEquipment")
+
+[node name="HealthComponent" type="Node" parent="Player" unique_id=576434915]
+script = ExtResource("2_grndp")
+
+[node name="GUI" type="CanvasLayer" parent="." unique_id=967126930]
+
+[node name="Example" parent="GUI" unique_id=851471681 node_paths=PackedStringArray("player_health", "health_label") instance=ExtResource("1_wivwr")]
+player_health = NodePath("../../Player/HealthComponent")
+health_label = NodePath("PlayerStats/MarginContainer/VBoxContainer/Life/Value")
+
+[node name="PlayerEquipment" parent="GUI/Example" index="1" unique_id=134121884 node_paths=PackedStringArray("slots")]
+slots = {
+1: NodePath("MarginContainer/Control/VBoxContainer/Head"),
+2: NodePath("MarginContainer/Control/VBoxContainer/Chest"),
+3: NodePath("MarginContainer/Control/VBoxContainer/Legs"),
+4: NodePath("MarginContainer/Control/VBoxContainer/Feet"),
+5: NodePath("MarginContainer/Control/VBoxContainer2/Weapon"),
+6: NodePath("MarginContainer/Control/VBoxContainer2/Shield"),
+7: NodePath("MarginContainer/Control/VBoxContainer2/Neck"),
+8: NodePath("MarginContainer/Control/VBoxContainer2/Ring")
+}
+
+[node name="QuantitySelector" parent="GUI/Example" index="12" unique_id=2020976713 groups=["QuantitySelector"]]
+
+[editable path="GUI/Example"]
