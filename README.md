@@ -21,4 +21,4 @@ Checkout [Example](example) scene for a quick glance on how the system works.
 
 ## API Docs
 
-Visit [Wiki](wiki) for documentation.
+Visit [Wiki](https://github.com/Oen44/Godot-Inventory/wiki) for documentation.
