@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://c86xyh0pngjrw"]
 
-[ext_resource type="Script" uid="uid://cfw0fruf7qs2n" path="res://scripts/npc/VendorInventory.gd" id="1_3nmds"]
+[ext_resource type="Script" uid="uid://cfw0fruf7qs2n" path="res://scripts/vendor/VendorInventory.gd" id="1_3nmds"]
 [ext_resource type="Script" uid="uid://dng84q4i43g8r" path="res://scripts/inventory/InventoryConfig.gd" id="2_5ombl"]
 [ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/inventory/InventoryView.gd" id="3_axck0"]
 
