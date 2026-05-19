@@ -1,4 +1,3 @@
-class_name ItemTooltip
 extends Control
 ## Displays a tooltip for an item when hovered over.
 ##
@@ -17,7 +16,15 @@ var sections: Array[TooltipSection] = [
 	BaseStatsSection.new(),
 	AffixesSection.new(),
 	DescriptionSection.new(),
+	PriceSection.new()
 ]
+
+func _ready():
+	var canvas_layer = CanvasLayer.new()
+	canvas_layer.layer = 10
+	get_parent().call_deferred("remove_child", self)
+	get_parent().call_deferred("add_child", canvas_layer)
+	canvas_layer.call_deferred("add_child", self)
 
 func _unhandled_key_input(event):
 	if event is InputEventKey:
@@ -53,6 +60,7 @@ func display(rect: Rect2):
 	
 	global_position = new_pos
 
+## I hate this
 func adjust_size():
 	var target_width = 0
 	var target_height = 0
@@ -65,6 +73,8 @@ func adjust_size():
 			var font = child.get_theme_font("normal_font")
 			var text = child.get_parsed_text()
 			var text_size = font.get_string_size(text, HORIZONTAL_ALIGNMENT_LEFT, -1, child.get_theme_font_size("normal_font_size"))
+			if child.text.find("[img") != -1:
+				text_size.x += child.get_theme_font_size("normal_font")
 			target_width = max(target_width, text_size.x)
 			target_height += text_size.y
 		else:

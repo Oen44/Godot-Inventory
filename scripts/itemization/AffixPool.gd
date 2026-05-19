@@ -1,11 +1,15 @@
-class_name AffixPool
 extends Node
 ## A pool of affix definitions to roll from.
 
-static var _affixes: Dictionary[String, AffixDefinition] = {}
+@export var affixes_path: String = "res://affixes/"
+
+var _affixes: Dictionary[String, AffixDefinition] = {}
+
+func _enter_tree():
+	_load_affixes()
 
 ## Loads all AffixDefinition resources from the items_path + "/affixes/" directory.
-static func load_affixes(affixes_path):
+func _load_affixes():
 	var dir = DirAccess.open(affixes_path)
 	if not dir:
 		push_error("Failed to open affixes directory.")
@@ -32,15 +36,21 @@ static func load_affixes(affixes_path):
 	print("Loaded %d affixes." % _affixes.size())
 
 ## Rolls an affix for the given item, returning an AffixInstance or null if none can be applied.
-static func roll_affix(candidates: Array[AffixDefinition], item: Item) -> AffixInstance:
+func roll_affix(candidates: Array[AffixDefinition], item: Item) -> AffixInstance:
 	if candidates.is_empty():
 		return null
 
 	var selected := _weighted_pick(candidates)
+	while item.has_affix(selected.id):
+		candidates.erase(selected)
+		if candidates.is_empty():
+			return null
+		selected = _weighted_pick(candidates)
+	
 	return selected.roll(item)
 
 ## Retrieves all affixes that can be applied to the given item.
-static func get_affixes_for(item: Item) -> Array[AffixDefinition]:
+func get_affixes_for(item: Item) -> Array[AffixDefinition]:
 	var result: Array[AffixDefinition] = []
 	for affix_id in _affixes:
 		var affix = _affixes[affix_id]
@@ -56,11 +66,11 @@ static func get_affixes_for(item: Item) -> Array[AffixDefinition]:
 	return result
 
 ## Retrieves an affix definition by its ID.
-static func get_affix(affix_id: String) -> AffixDefinition:
+func get_affix(affix_id: String) -> AffixDefinition:
 	return _affixes.get(affix_id)
 
 ## Performs a weighted random selection from a list of AffixDefinitions.
-static func _weighted_pick(list: Array[AffixDefinition]) -> AffixDefinition:
+func _weighted_pick(list: Array[AffixDefinition]) -> AffixDefinition:
 	var total := 0
 	for a in list:
 		total += a.weight

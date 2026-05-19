@@ -4,7 +4,7 @@ extends Control
 ##
 ## Can hold an InventoryItem or be empty.
 
-signal slot_clicked(slot: EquipmentSlot)
+signal slot_clicked(slot: EquipmentSlot, button: MouseButton)
 
 @export var quantity_label: Label
 @export var slot_type: ItemBase.SlotType = ItemBase.SlotType.NONE
@@ -13,8 +13,8 @@ func _ready():
 	quantity_label.text = ""
 
 func _gui_input(event):
-	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		slot_clicked.emit(self)
+	if event is InputEventMouseButton and event.pressed:
+		slot_clicked.emit(self, event.button_index)
 
 func set_item(equipment_item: InventoryItem) -> void:
 	add_child(equipment_item)

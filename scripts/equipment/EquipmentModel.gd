@@ -1,5 +1,5 @@
 class_name EquipmentModel
-extends Control
+extends BaseInventoryModel
 ## Manages equipment slots for a character.
 ##
 ## Handles equipping and unequipping items.
@@ -9,16 +9,9 @@ signal item_unequipped(item: Item)
 
 @export var slots: Dictionary[ItemBase.SlotType, EquipmentSlot] = {}
 
-var inventory_system: InventorySystem ## Reference to the main InventorySystem
-
 var items: Dictionary[ItemBase.SlotType, Item] = {} ## Maps slot type to equipped InventoryItem
 
 func _ready():
-	inventory_system = get_tree().get_first_node_in_group("InventorySystem")
-	if not inventory_system:
-		push_error("EquipmentModel could not find InventorySystem in scene tree.")
-		return
-
 	for slot_type in slots.keys():
 		var slot = slots[slot_type]
 		slot.slot_clicked.connect(_on_slot_clicked)
@@ -28,49 +21,58 @@ func _ready():
 func _exit_tree():
 	_save()
 
-func _on_slot_clicked(slot: EquipmentSlot) -> void:
+func _on_slot_clicked(slot: EquipmentSlot, button: MouseButton) -> void:
 	var equipment_item: InventoryItem = slot.get_equipment_item()
 	var slot_type = slot.slot_type
-	if equipment_item:
-		if inventory_system.is_holding_item(): ## Swap
-			var held_item = inventory_system.get_held_item()
-			if held_item.base.slot_type != slot_type:
-				return
-			
-			if stack_items(held_item, equipment_item.item):
-				if held_item.quantity == 0:
-					inventory_system.drop_held_item()
-				return
-			
-			inventory_system.drop_held_item()
-			remove_item_at(slot_type)
 
-			add_item_at(held_item, slot_type)
-			inventory_system.pick_up_item(equipment_item)
-		else: ## Pick up
-			inventory_system.pick_up_item(equipment_item)
-			remove_item_at(slot_type)
-	elif inventory_system.is_holding_item(): ## Place
-		var held_item = inventory_system.get_held_item()
-		if add_item_at(held_item, slot_type):
-			inventory_system.drop_held_item()
+	if button == MOUSE_BUTTON_LEFT:
+		if equipment_item:
+			if InventorySystem.is_holding_item(): ## Swap
+				var held_item = InventorySystem.get_held_item()
+				if held_item.base.slot_type != slot_type:
+					return
+				
+				if stack_items(held_item, equipment_item.item):
+					if held_item.quantity == 0:
+						InventorySystem.drop_held_item()
+					return
+				
+				InventorySystem.drop_held_item()
+				remove_item_at(slot_type)
 
-## Stacks item A with item B, if item B can be stacked with item A
-func stack_items(item_a: Item, item_b: Item) -> bool:
-	if not item_a.base.stackable or not item_b.base.stackable:
+				add_item_at(held_item, slot_type)
+				InventorySystem.pick_up_item(equipment_item.item)
+			else: ## Pick up
+				InventorySystem.pick_up_item(equipment_item.item)
+				remove_item_at(slot_type)
+		elif InventorySystem.is_holding_item(): ## Place
+			var held_item = InventorySystem.get_held_item()
+			if add_item_at(held_item, slot_type):
+				InventorySystem.drop_held_item()
+	elif button == MOUSE_BUTTON_RIGHT and equipment_item:
+		remove_item_at(slot_type)
+		InventorySystem.get_player_inventory().add_item(equipment_item.item)
+
+func equip_item(item: Item) -> int:
+	if not item:
 		return false
 	
-	if item_a.base.id != item_b.base.id:
+	if not slots.has(item.base.slot_type):
 		return false
 	
-	if item_b.quantity >= item_a.base.max_stacks:
-		return false
-	
-	var missing_quant = item_b.base.max_stacks - item_b.quantity
-	var to_add = min(missing_quant, item_a.quantity)
-	item_b.set_quantity(item_b.quantity + to_add)
-	item_a.set_quantity(item_a.quantity - to_add)
-	
+	var slot = slots[item.base.slot_type]
+	var equipment_item: InventoryItem = slot.get_equipment_item()
+	if equipment_item: ## Swap
+		remove_item_at(item.base.slot_type)
+		add_item_at(item, item.base.slot_type)
+		var parent_inventory = InventorySystem.get_inventory(item.parent_inventory)
+		parent_inventory.remove_item(item)
+		parent_inventory.add_item(equipment_item.item)
+	else: ## Place
+		var parent_inventory = InventorySystem.get_inventory(item.parent_inventory)
+		parent_inventory.remove_item(item)
+		add_item_at(item, item.base.slot_type)
+
 	return true
 
 func create_item_at(slot_type: ItemBase.SlotType, item_base: ItemBase, quantity: int = 1) -> bool:
@@ -110,8 +112,8 @@ func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
 	items[slot_type] = equipment_item.item
 	slots[slot_type].set_item(equipment_item)
-	equipment_item.mouse_entered.connect(inventory_system.on_item_hover.bind(equipment_item, true))
-	equipment_item.mouse_exited.connect(inventory_system.on_item_hover.bind(equipment_item, false))
+	equipment_item.mouse_entered.connect(InventorySystem.on_item_hover.bind(equipment_item, true))
+	equipment_item.mouse_exited.connect(InventorySystem.on_item_hover.bind(equipment_item, false))
 	item_equipped.emit(equipment_item.item)
 
 func _save() -> void:

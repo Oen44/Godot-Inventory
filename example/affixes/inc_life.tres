@@ -7,4 +7,5 @@ script = ExtResource("1_3ag2u")
 id = "inc_life"
 description = "#% increased maximum Life"
 weight = 25
+price_multiplier = 2.0
 metadata/_custom_type_script = "uid://blwg8jfiqd87w"

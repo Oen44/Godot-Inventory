@@ -14,3 +14,9 @@ config/name="Inventory System"
 run/main_scene="uid://buf00tsvshh1a"
 config/features=PackedStringArray("4.7")
 config/icon="res://Icon.png"
+
+[autoload]
+
+InventorySystem="*uid://h655p864y720"
+AffixPool="*uid://1wmlwfyubvwa"
+ItemTooltip="*uid://ct8rnmnaq2347"

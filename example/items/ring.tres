@@ -10,6 +10,6 @@ script = ExtResource("1_dyxe3")
 name = "Ring"
 description = "Ring with a ruby"
 icon = SubResource("CompressedTexture2D_ga3wo")
+base_value = 15
 slot_type = 8
-item_type = 7
 metadata/_custom_type_script = "uid://c6xipxmcp476u"

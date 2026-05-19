@@ -6,12 +6,13 @@
 
 [node name="ExampleGame" type="Node2D" unique_id=2103362733]
 
-[node name="Player" type="Node2D" parent="." unique_id=1200678361 node_paths=PackedStringArray("health_component") groups=["Player"]]
+[node name="Player" type="Node2D" parent="." unique_id=1200678361 node_paths=PackedStringArray("health_component", "equipment") groups=["Player"]]
 script = ExtResource("1_r2qdm")
 stats = Dictionary[String, Variant]({
 "max_life": 100
 })
 health_component = NodePath("HealthComponent")
+equipment = NodePath("../GUI/Example/PlayerEquipment")
 
 [node name="HealthComponent" type="Node" parent="Player" unique_id=576434915]
 script = ExtResource("2_grndp")
@@ -22,12 +23,7 @@ script = ExtResource("2_grndp")
 player_health = NodePath("../../Player/HealthComponent")
 health_label = NodePath("PlayerStats/MarginContainer/VBoxContainer/Life/Value")
 
-[node name="InventorySystem" parent="GUI/Example" index="0" unique_id=376500160 node_paths=PackedStringArray("player_inventory")]
-items_path = "res://example/items/"
-affixes_path = "res://example/affixes/"
-player_inventory = NodePath("../PlayerInventory")
-
-[node name="PlayerEquipment" parent="GUI/Example" index="3" unique_id=134121884 node_paths=PackedStringArray("slots")]
+[node name="PlayerEquipment" parent="GUI/Example" index="1" unique_id=134121884 node_paths=PackedStringArray("slots")]
 slots = {
 1: NodePath("MarginContainer/Control/VBoxContainer/Head"),
 2: NodePath("MarginContainer/Control/VBoxContainer/Chest"),
@@ -39,7 +35,6 @@ slots = {
 8: NodePath("MarginContainer/Control/VBoxContainer2/Ring")
 }
 
-[node name="Label" parent="GUI/Example" index="8" unique_id=2019804519]
-offset_right = 500.0
+[node name="QuantitySelector" parent="GUI/Example" index="12" unique_id=2020976713 groups=["QuantitySelector"]]
 
 [editable path="GUI/Example"]

@@ -10,4 +10,5 @@ description = "Vendor for items"
 icon = ExtResource("1_km042")
 stackable = true
 max_stacks = 30
+base_value = 0
 metadata/_custom_type_script = "uid://c6xipxmcp476u"

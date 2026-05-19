@@ -1,0 +1,74 @@
+[gd_scene format=3 uid="uid://dfo6atm4fkkgd"]
+
+[ext_resource type="Texture2D" uid="uid://bed88bbdomu13" path="res://example/images/P_Red03.png" id="1_bklt7"]
+[ext_resource type="Script" uid="uid://diiv3ifabf2r8" path="res://scripts/inventory/QuantitySelector.gd" id="1_dvwt1"]
+
+[node name="QuantitySelector" type="PanelContainer" unique_id=2020976713 node_paths=PackedStringArray("item_icon", "item_name_label", "quantity_label", "slider", "confirm_button", "cancel_button")]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -175.0
+offset_top = -80.5
+offset_right = 175.0
+offset_bottom = 80.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dvwt1")
+item_icon = NodePath("MarginContainer/VBoxContainer/ItemIcon")
+item_name_label = NodePath("MarginContainer/VBoxContainer/ItemName")
+quantity_label = NodePath("MarginContainer/VBoxContainer/Quantity")
+slider = NodePath("MarginContainer/VBoxContainer/Slider")
+confirm_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/ConfirmButton")
+cancel_button = NodePath("MarginContainer/VBoxContainer/HBoxContainer/CancelButton")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=564225005]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" unique_id=1187931354]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ItemIcon" type="TextureRect" parent="MarginContainer/VBoxContainer" unique_id=1371971737]
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("1_bklt7")
+
+[node name="ItemName" type="Label" parent="MarginContainer/VBoxContainer" unique_id=1475535697]
+layout_mode = 2
+text = "Healing Potion"
+horizontal_alignment = 1
+
+[node name="Quantity" type="RichTextLabel" parent="MarginContainer/VBoxContainer" unique_id=1247283179]
+layout_mode = 2
+bbcode_enabled = true
+text = "[color=white]1[/color][color=orange]/25[/color]"
+fit_content = true
+autowrap_mode = 0
+horizontal_alignment = 1
+
+[node name="Slider" type="HSlider" parent="MarginContainer/VBoxContainer" unique_id=621440698]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 6
+min_value = 1.0
+max_value = 5.0
+value = 1.0
+rounded = true
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer" unique_id=265631297]
+layout_mode = 2
+alignment = 1
+
+[node name="CancelButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=2106579909]
+layout_mode = 2
+text = "Cancel"
+
+[node name="ConfirmButton" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer" unique_id=1523739930]
+layout_mode = 2
+text = "Confirm"

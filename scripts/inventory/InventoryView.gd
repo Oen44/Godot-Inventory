@@ -24,3 +24,10 @@ func _populate_slots() -> void:
 
 func set_item(slot_index: int, item: InventoryItem) -> void:
 	get_child(slot_index).set_item(item)
+
+func get_slot_at_position(point: Vector2) -> InventorySlot:
+	for child in get_children():
+		if child is InventorySlot and child.get_global_rect().has_point(point):
+			return child
+	
+	return null

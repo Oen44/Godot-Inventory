@@ -27,7 +27,7 @@ enum SlotType {
 @export_group("Properties")
 @export var stackable: bool
 @export var max_stacks: int = 1
-@export var base_value: int
+@export var base_value: int = 1
 
 @export_group("Equipment")
 @export var slot_type: SlotType:

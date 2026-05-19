@@ -10,6 +10,7 @@ script = ExtResource("1_6xtwl")
 name = "Armor"
 description = "Iron body armor"
 icon = SubResource("CompressedTexture2D_31hq2")
+base_value = 6
 slot_type = 2
 armor = 4
 metadata/_custom_type_script = "uid://c6xipxmcp476u"
