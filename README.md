@@ -22,3 +22,9 @@ Checkout [Example](example) scene for a quick glance on how the system works.
 ## API Docs
 
 Visit [Wiki](https://github.com/Oen44/Godot-Inventory/wiki) for documentation.
+
+![img](docs/images/1.png)
+![img](docs/images/2.png)
+![img](docs/images/3.png)
+![img](docs/images/4.png)
+![img](docs/images/5.png)
