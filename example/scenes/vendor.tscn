@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c86xyh0pngjrw"]
+
+[ext_resource type="Script" uid="uid://cfw0fruf7qs2n" path="res://scripts/vendor/VendorInventory.gd" id="1_3nmds"]
+[ext_resource type="Script" uid="uid://dng84q4i43g8r" path="res://scripts/inventory/InventoryConfig.gd" id="2_5ombl"]
+[ext_resource type="Script" uid="uid://j114mtis3dkq" path="res://scripts/inventory/InventoryView.gd" id="3_axck0"]
+
+[sub_resource type="Resource" id="Resource_7xvys"]
+script = ExtResource("2_5ombl")
+slots = 80
+interactable = false
+persistent = false
+metadata/_custom_type_script = "uid://dng84q4i43g8r"
+
+[node name="Vendor" type="PanelContainer" unique_id=621032004]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_left = 6.0
+offset_top = 131.0
+offset_right = 317.0
+offset_bottom = -131.0
+grow_vertical = 2
+script = ExtResource("1_3nmds")
+id = "vendor"
+config = SubResource("Resource_7xvys")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1761850670]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer" unique_id=1955076909]
+layout_mode = 2
+
+[node name="InventoryView" type="FlowContainer" parent="MarginContainer/ScrollContainer" unique_id=286596873]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("3_axck0")

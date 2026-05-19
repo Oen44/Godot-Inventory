@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://cbna6pn0gma4t"]
+
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_gbbwr"]
+[ext_resource type="Texture2D" uid="uid://bed88bbdomu13" path="res://example/images/P_Red03.png" id="1_jh0h2"]
+
+[resource]
+script = ExtResource("1_gbbwr")
+name = "Health Potion"
+description = "Recovers 1-6 Life"
+icon = ExtResource("1_jh0h2")
+stackable = true
+max_stacks = 10
+base_value = 4
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="MaxLifeAffix" format=3 uid="uid://d08tiogu44c3f"]
+
+[ext_resource type="Script" uid="uid://c1xb30dwvbltw" path="res://scripts/itemization/affixes/max_life.gd" id="1_xpsey"]
+
+[resource]
+script = ExtResource("1_xpsey")
+id = "max_life"
+description = "+# to maximum Life"
+metadata/_custom_type_script = "uid://c1xb30dwvbltw"

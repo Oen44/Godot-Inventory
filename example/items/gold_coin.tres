@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://cr16lbejq16hh"]
+
+[ext_resource type="Texture2D" uid="uid://dnko2avfui3py" path="res://example/images/I_GoldCoin.png" id="1_km042"]
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_qmbdx"]
+
+[resource]
+script = ExtResource("1_qmbdx")
+name = "Gold Coin"
+description = "Vendor for items"
+icon = ExtResource("1_km042")
+stackable = true
+max_stacks = 30
+base_value = 0
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

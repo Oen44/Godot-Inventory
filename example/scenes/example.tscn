@@ -1,0 +1,247 @@
+[gd_scene format=3 uid="uid://cyl4jq2qr5h8p"]
+
+[ext_resource type="Script" uid="uid://0d3cu6kxwee5" path="res://example/scripts/ExampleShowcase.gd" id="1_u5lm8"]
+[ext_resource type="PackedScene" uid="uid://dx4lqmsnb6857" path="res://example/scenes/player_inventory.tscn" id="3_2adls"]
+[ext_resource type="PackedScene" uid="uid://dr7liessjpvcn" path="res://example/scenes/player_equipment.tscn" id="4_ooy5i"]
+[ext_resource type="PackedScene" uid="uid://c2ea6kt4v3u7p" path="res://example/scenes/stash_chest.tscn" id="5_keoaq"]
+[ext_resource type="Script" uid="uid://dng84q4i43g8r" path="res://scripts/inventory/InventoryConfig.gd" id="5_ooy5i"]
+[ext_resource type="PackedScene" uid="uid://c86xyh0pngjrw" path="res://example/scenes/vendor.tscn" id="8_keoaq"]
+[ext_resource type="Script" uid="uid://do8ue0towx8vu" path="res://scripts/vendor/VendorComponent.gd" id="10_4h1pg"]
+[ext_resource type="Script" uid="uid://bulvxxyy0pl5f" path="res://scripts/vendor/VendorItem.gd" id="11_rev1e"]
+[ext_resource type="Resource" uid="uid://rduv0wxw285o" path="res://example/items/sword.tres" id="12_xcr7u"]
+[ext_resource type="Resource" uid="uid://bbawfkhwf1dbq" path="res://example/items/armor.tres" id="13_04b5v"]
+[ext_resource type="Resource" uid="uid://54eaqqo2ey7d" path="res://example/items/ring.tres" id="14_voy08"]
+[ext_resource type="Resource" uid="uid://cbna6pn0gma4t" path="res://example/items/health_potion.tres" id="15_04b5v"]
+[ext_resource type="PackedScene" uid="uid://dfo6atm4fkkgd" path="res://scenes/quantity_selector.tscn" id="16_voy08"]
+
+[sub_resource type="Resource" id="Resource_keoaq"]
+script = ExtResource("5_ooy5i")
+slots = 60
+metadata/_custom_type_script = "uid://dng84q4i43g8r"
+
+[sub_resource type="Resource" id="Resource_ooy5i"]
+script = ExtResource("5_ooy5i")
+slots = 200
+metadata/_custom_type_script = "uid://dng84q4i43g8r"
+
+[sub_resource type="Resource" id="Resource_xkpou"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("12_xcr7u")
+roll_affixes = true
+gold_price = 5
+custom_item = ExtResource("15_04b5v")
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[sub_resource type="Resource" id="Resource_jli6g"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("13_04b5v")
+roll_affixes = true
+gold_price = 12
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[sub_resource type="Resource" id="Resource_rev1e"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("14_voy08")
+roll_affixes = true
+gold_price = 7
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[sub_resource type="Resource" id="Resource_voy08"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("15_04b5v")
+quantity = 50
+gold_price = 2
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[sub_resource type="Resource" id="Resource_04b5v"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("15_04b5v")
+quantity = 13
+gold_price = 6
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[sub_resource type="Resource" id="Resource_5nt0i"]
+script = ExtResource("11_rev1e")
+item_base = ExtResource("15_04b5v")
+quantity = 8
+gold_price = 5
+metadata/_custom_type_script = "uid://bulvxxyy0pl5f"
+
+[node name="Example" type="Control" unique_id=413271790 node_paths=PackedStringArray("item_id_field", "create_item_btn", "stash_button", "stash_panel", "npc1_button", "vendor1", "npc2_button", "vendor2", "vendor_inventory")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_u5lm8")
+item_id_field = NodePath("HBoxContainer/ItemIdField")
+create_item_btn = NodePath("HBoxContainer/CreateItemBtn")
+stash_button = NodePath("StashButton")
+stash_panel = NodePath("StashChest")
+npc1_button = NodePath("NPCButton")
+vendor1 = NodePath("NPCButton/VendorComponent")
+npc2_button = NodePath("NPCButton2")
+vendor2 = NodePath("NPCButton2/VendorComponent")
+vendor_inventory = NodePath("Vendor")
+
+[node name="PlayerInventory" parent="." unique_id=926139556 instance=ExtResource("3_2adls")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 921.0
+offset_top = 124.0
+offset_right = 1129.0
+offset_bottom = 437.0
+grow_horizontal = 1
+config = SubResource("Resource_keoaq")
+
+[node name="PlayerEquipment" parent="." unique_id=134121884 node_paths=PackedStringArray("slots") instance=ExtResource("4_ooy5i")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 757.0
+offset_top = 209.0
+offset_right = 890.0
+offset_bottom = 368.0
+grow_horizontal = 1
+slots = {
+1: null,
+2: null,
+3: null,
+4: null,
+5: null,
+6: null,
+7: null,
+8: null
+}
+
+[node name="StashChest" parent="." unique_id=697654230 instance=ExtResource("5_keoaq")]
+visible = false
+layout_mode = 1
+offset_right = 329.0
+config = SubResource("Resource_ooy5i")
+
+[node name="Vendor" parent="." unique_id=621032004 instance=ExtResource("8_keoaq")]
+visible = false
+layout_mode = 1
+grow_vertical = 1
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1317701788]
+layout_mode = 0
+offset_left = 426.0
+offset_top = 7.0
+offset_right = 689.0
+offset_bottom = 47.0
+
+[node name="ItemIdField" type="LineEdit" parent="HBoxContainer" unique_id=1001011859]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "Item id"
+
+[node name="CreateItemBtn" type="Button" parent="HBoxContainer" unique_id=1381853915]
+layout_mode = 2
+text = "Create Item"
+
+[node name="PlayerStats" type="PanelContainer" parent="." unique_id=1560207542]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -165.0
+offset_top = -181.0
+offset_right = 165.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="PlayerStats" unique_id=1244755683]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PlayerStats/MarginContainer" unique_id=1704950147]
+layout_mode = 2
+
+[node name="Life" type="HBoxContainer" parent="PlayerStats/MarginContainer/VBoxContainer" unique_id=1343532962]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="PlayerStats/MarginContainer/VBoxContainer/Life" unique_id=1477510408]
+layout_mode = 2
+text = "Life: "
+
+[node name="Value" type="Label" parent="PlayerStats/MarginContainer/VBoxContainer/Life" unique_id=187296548]
+layout_mode = 2
+text = "0 / 0"
+
+[node name="Label2" type="Label" parent="." unique_id=1170721435]
+layout_mode = 0
+offset_left = 754.0
+offset_top = 176.0
+offset_right = 906.0
+offset_bottom = 216.0
+text = "Player equipment"
+autowrap_mode = 3
+
+[node name="Label3" type="Label" parent="." unique_id=2102678965]
+layout_mode = 0
+offset_left = 958.0
+offset_top = 93.0
+offset_right = 1110.0
+offset_bottom = 133.0
+text = "Player inventory"
+autowrap_mode = 3
+
+[node name="Label4" type="Label" parent="." unique_id=1883264217]
+layout_mode = 0
+offset_left = 518.0
+offset_top = 428.0
+offset_right = 623.0
+offset_bottom = 456.0
+text = "Player stats"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[node name="StashButton" type="Button" parent="." unique_id=1298071649]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 165.0
+offset_right = 449.0
+offset_bottom = 196.0
+text = "Stash"
+
+[node name="NPCButton" type="Button" parent="." unique_id=2096177605]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 214.0
+offset_right = 449.0
+offset_bottom = 245.0
+text = "NPC 1"
+
+[node name="VendorComponent" type="Node" parent="NPCButton" unique_id=1651049149]
+script = ExtResource("10_4h1pg")
+items_for_sale = Array[ExtResource("11_rev1e")]([SubResource("Resource_xkpou"), SubResource("Resource_jli6g"), SubResource("Resource_rev1e"), SubResource("Resource_voy08")])
+metadata/_custom_type_script = "uid://do8ue0towx8vu"
+
+[node name="NPCButton2" type="Button" parent="." unique_id=1584284865]
+layout_mode = 0
+offset_left = 398.0
+offset_top = 256.0
+offset_right = 449.0
+offset_bottom = 287.0
+text = "NPC 2"
+
+[node name="VendorComponent" type="Node" parent="NPCButton2" unique_id=533859176]
+script = ExtResource("10_4h1pg")
+items_for_sale = Array[ExtResource("11_rev1e")]([SubResource("Resource_04b5v"), SubResource("Resource_5nt0i")])
+metadata/_custom_type_script = "uid://do8ue0towx8vu"
+
+[node name="QuantitySelector" parent="." unique_id=2020976713 instance=ExtResource("16_voy08")]
+visible = false
+layout_mode = 1

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="ItemBase" format=3 uid="uid://bbawfkhwf1dbq"]
+
+[ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_6xtwl"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_31hq2"]
+load_path = "res://.godot/imported/A_Armour02.png-5e0f46e21a7faaba89b44e38dcb32009.ctex"
+
+[resource]
+script = ExtResource("1_6xtwl")
+name = "Armor"
+description = "Iron body armor"
+icon = SubResource("CompressedTexture2D_31hq2")
+base_value = 6
+slot_type = 2
+armor = 4
+metadata/_custom_type_script = "uid://c6xipxmcp476u"

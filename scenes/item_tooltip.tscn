@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://ct8rnmnaq2347"]
+
+[ext_resource type="Script" uid="uid://bgffi58denc1f" path="res://scripts/tooltip/ItemTooltip.gd" id="1_3gh8j"]
+
+[node name="ItemTooltip" type="Control" unique_id=998602863 node_paths=PackedStringArray("container", "margin_container")]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 556.0
+offset_top = 204.0
+offset_right = 617.0
+offset_bottom = 238.0
+mouse_filter = 2
+script = ExtResource("1_3gh8j")
+container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
+margin_container = NodePath("PanelContainer/MarginContainer")
+max_width = 400
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=234062995]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1156866397]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1243074113]
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2

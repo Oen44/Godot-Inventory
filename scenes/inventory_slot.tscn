@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://bbvivekx6nlyc"]
+
+[ext_resource type="Script" uid="uid://d3r6iu8y0fulq" path="res://scripts/inventory/InventorySlot.gd" id="1_dxvxp"]
+
+[node name="InventorySlot" type="Panel" unique_id=1874938164 node_paths=PackedStringArray("quantity_label")]
+custom_minimum_size = Vector2(34, 34)
+mouse_filter = 1
+script = ExtResource("1_dxvxp")
+quantity_label = NodePath("MarginContainer/Label")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=933847380]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 2
+theme_override_constants/margin_bottom = 2
+
+[node name="Label" type="Label" parent="MarginContainer" unique_id=453810050]
+layout_mode = 2
+size_flags_vertical = 1
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 11
+horizontal_alignment = 2
+vertical_alignment = 2
