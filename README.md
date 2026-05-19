@@ -19,6 +19,10 @@ Example project including scripts and nodes for building inventories, equipments
 
 Checkout [Example](example) scene for a quick glance on how the system works.
 
+## Installation
+
+Copy `scripts` and `scenes`, add `scenes/inventory_system`, `scenes/affix_pool`, `scenes/item_tooltip` scenes to your Autoload (in that order)
+
 ## API Docs
 
 Visit [Wiki](https://github.com/Oen44/Godot-Inventory/wiki) for documentation.
