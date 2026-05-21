@@ -15,7 +15,7 @@ func stack_items(item_a: Item, item_b: Item) -> bool:
 	
 	var missing_quant = item_b.base.max_stacks - item_b.quantity
 	var to_add = min(missing_quant, item_a.quantity)
-	item_b.set_quantity(item_b.quantity + to_add)
-	item_a.set_quantity(item_a.quantity - to_add)
+	item_b.add_quantity(to_add)
+	item_a.remove(to_add)
 	
 	return true

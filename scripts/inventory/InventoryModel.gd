@@ -134,7 +134,6 @@ func _on_slot_clicked(slot: InventorySlot, button: MouseButton, ctrl_pressed: bo
 				vendor_inventory.sell_item(inventory_item.item)
 				return
 		
-		## Quick equip
 		item_used.emit(inventory_item)
 
 func can_create_item(item_base: ItemBase, quantity: int = 1) -> bool:
@@ -175,7 +174,7 @@ func _create_stackable_item(item_base: ItemBase, quantity: int = 1) -> bool:
 			if existing_item.base.id == item_base.id and existing_item.quantity < existing_item.base.max_stacks:
 				var missing_quant = existing_item.base.max_stacks - existing_item.quantity
 				var to_add = min(missing_quant, quantity)
-				existing_item.set_quantity(existing_item.quantity + to_add)
+				existing_item.add_quantity(to_add)
 				quantity -= to_add
 				if quantity <= 0:
 					return true
@@ -315,7 +314,7 @@ func remove_item_by_id(item_id: String, quantity: int = 1) -> void:
 		var slot_index = entry.slot_index
 		var item = entry.item
 		if item.quantity > quantity:
-			item.set_quantity(item.quantity - quantity)
+			item.remove(quantity)
 			break
 		else:
 			remove_item_at(slot_index)
@@ -385,7 +384,7 @@ func _on_quantity_confirmed(quantity: int) -> void:
 	if quantity >= item.quantity:
 		return
 	
-	item.set_quantity(item.quantity - quantity)
+	item.remove(quantity)
 	var new_item = item.clone(quantity)
 	new_item.slot_id = -1
 	new_item.parent_inventory = id

@@ -2,6 +2,11 @@
 
 [ext_resource type="Script" uid="uid://c6xipxmcp476u" path="res://scripts/itemization/ItemBase.gd" id="1_gbbwr"]
 [ext_resource type="Texture2D" uid="uid://bed88bbdomu13" path="res://example/images/P_Red03.png" id="1_jh0h2"]
+[ext_resource type="Script" uid="uid://ea5iicex6w0n" path="res://example/items/events/HealingPotion.gd" id="2_87n4i"]
+
+[sub_resource type="Resource" id="Resource_hghwg"]
+script = ExtResource("2_87n4i")
+metadata/_custom_type_script = "uid://ea5iicex6w0n"
 
 [resource]
 script = ExtResource("1_gbbwr")
@@ -11,4 +16,5 @@ icon = ExtResource("1_jh0h2")
 stackable = true
 max_stacks = 10
 base_value = 4
+on_use = SubResource("Resource_hghwg")
 metadata/_custom_type_script = "uid://c6xipxmcp476u"

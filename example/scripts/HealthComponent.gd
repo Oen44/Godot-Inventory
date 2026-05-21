@@ -19,3 +19,6 @@ func set_max_health(value: int) -> void:
 		_health = _max_health
 	
 	health_changed.emit(_health, _max_health)
+
+func add_health(amount: int) -> void:
+	set_health(_health + amount)

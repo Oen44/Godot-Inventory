@@ -19,7 +19,7 @@ func buy_item(slot_index: int, item: Item) -> bool:
 	if item.quantity > cached_item.quantity:
 		return false
 	
-	cached_item.set_quantity(cached_item.quantity - item.quantity)
+	cached_item.remove(item.quantity)
 
 	if cached_item.quantity <= 0:
 		_cached_items[slot_index] = null

@@ -45,6 +45,11 @@ enum SlotType {
 ## (shields)
 @export var block_chance: int
 
+@export_group("Events")
+@export var on_use: ItemEvent
+@export var on_equip: ItemEvent
+@export var on_unequip: ItemEvent
+
 var id: String: get = _get_id
 
 func _get_id() -> String:

@@ -41,6 +41,13 @@ func _on_item_used(inventory_item: InventoryItem) -> void:
 	if not item:
 		return
 	
+	if item.base.on_use:
+		if item.base.on_use.can_use(item, self):
+			var used = item.base.on_use.on_use(item, self)
+			if used:
+				return
+
+	# Quick equip
 	if item.base.slot_type != ItemBase.SlotType.NONE:
 		equipment.equip_item(item)
 

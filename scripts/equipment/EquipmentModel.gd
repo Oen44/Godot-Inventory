@@ -59,6 +59,11 @@ func equip_item(item: Item) -> int:
 	
 	if not slots.has(item.base.slot_type):
 		return false
+		
+	if item.base.on_equip:
+		var ret = item.base.on_equip.on_equip(item, self)
+		if not ret:
+			return false
 	
 	var slot = slots[item.base.slot_type]
 	var equipment_item: InventoryItem = slot.get_equipment_item()
@@ -104,6 +109,9 @@ func add_item_at(item: Item, slot_type: ItemBase.SlotType) -> bool:
 
 func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 	if items.has(slot_type):
+		var item = items[slot_type]
+		if item.base.on_unequip:
+			item.base.on_unequip.on_unequip(item, self)
 		item_unequipped.emit(items[slot_type])
 		var slot: EquipmentSlot = slots[slot_type]
 		slot.remove_item()

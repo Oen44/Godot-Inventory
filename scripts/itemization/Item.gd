@@ -33,6 +33,16 @@ func set_quantity(new_quantity: int):
 	_calculate_worth()
 	changed.emit(self)
 
+func add_quantity(amount: int):
+	set_quantity(quantity + amount)
+
+func remove(amount: int) -> bool:
+	if amount > quantity:
+		return false
+	
+	set_quantity(quantity - amount)
+	return true
+
 func roll_affixes():
 	var candidates = AffixPool.get_affixes_for(self)
 	if candidates.is_empty():
