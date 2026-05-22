@@ -86,26 +86,24 @@ vendor2 = NodePath("NPCButton2/VendorComponent")
 vendor_inventory = NodePath("Vendor")
 
 [node name="PlayerInventory" parent="." unique_id=926139556 instance=ExtResource("3_2adls")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 921.0
-offset_top = 124.0
-offset_right = 1129.0
-offset_bottom = 437.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -231.0
+offset_top = -200.0
+offset_right = -23.0
+offset_bottom = 113.0
 grow_horizontal = 1
 config = SubResource("Resource_keoaq")
 
 [node name="PlayerEquipment" parent="." unique_id=134121884 node_paths=PackedStringArray("slots") instance=ExtResource("4_ooy5i")]
-layout_mode = 0
-anchors_preset = 0
-anchor_left = 0.0
-anchor_right = 0.0
-offset_left = 757.0
-offset_top = 209.0
-offset_right = 890.0
-offset_bottom = 368.0
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -115.0
+offset_bottom = 44.0
 grow_horizontal = 1
 slots = {
 1: null,
@@ -121,19 +119,32 @@ slots = {
 [node name="StashChest" parent="." unique_id=697654230 instance=ExtResource("5_keoaq")]
 visible = false
 layout_mode = 1
-offset_right = 329.0
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = 8.0
+offset_top = -324.0
+offset_right = 337.0
+offset_bottom = 324.0
 config = SubResource("Resource_ooy5i")
 
 [node name="Vendor" parent="." unique_id=621032004 instance=ExtResource("8_keoaq")]
 visible = false
 layout_mode = 1
-grow_vertical = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -193.0
+offset_bottom = 193.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1317701788]
-layout_mode = 0
-offset_left = 426.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.48400003
+anchor_right = 0.48400003
+offset_left = -131.56805
 offset_top = 7.0
-offset_right = 689.0
+offset_right = 131.43195
 offset_bottom = 47.0
 
 [node name="ItemIdField" type="LineEdit" parent="HBoxContainer" unique_id=1001011859]
@@ -181,29 +192,45 @@ layout_mode = 2
 text = "0 / 0"
 
 [node name="Label2" type="Label" parent="." unique_id=1170721435]
-layout_mode = 0
-offset_left = 754.0
-offset_top = 176.0
-offset_right = 906.0
-offset_bottom = 216.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -398.0
+offset_top = -148.0
+offset_right = -246.0
+offset_bottom = -108.0
 text = "Player equipment"
 autowrap_mode = 3
 
 [node name="Label3" type="Label" parent="." unique_id=2102678965]
-layout_mode = 0
-offset_left = 958.0
-offset_top = 93.0
-offset_right = 1110.0
-offset_bottom = 133.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -194.0
+offset_top = -231.0
+offset_right = -42.0
+offset_bottom = -191.0
+grow_horizontal = 0
 text = "Player inventory"
 autowrap_mode = 3
 
 [node name="Label4" type="Label" parent="." unique_id=1883264217]
-layout_mode = 0
-offset_left = 518.0
-offset_top = 428.0
-offset_right = 623.0
-offset_bottom = 456.0
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -58.0
+offset_top = -220.0
+offset_right = 47.0
+offset_bottom = -192.0
 text = "Player stats"
 horizontal_alignment = 1
 autowrap_mode = 3

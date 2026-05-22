@@ -1,6 +1,8 @@
 # Godot Inventory System
 
-![](https://img.shields.io/github/stars/Oen44/Godot-Inventory) ![](https://img.shields.io/github/forks/Oen44/Godot-Inventory) ![](https://img.shields.io/github/downloads/oen44/Godot-Inventory/total) ![](https://img.shields.io/github/issues/Oen44/Godot-Inventory)
+![](https://img.shields.io/github/stars/Oen44/Godot-Inventory) ![](https://img.shields.io/github/issues/Oen44/Godot-Inventory)
+
+![img](docs/images/logo.webp)
 
 ## About
 
