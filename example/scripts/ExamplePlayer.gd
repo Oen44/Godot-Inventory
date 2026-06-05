@@ -21,13 +21,13 @@ func _ready():
 	InventorySystem.inventory_registered.connect(_on_inventory_registered)
 	InventorySystem.inventory_unregistered.connect(_on_inventory_unregistered)
 
-func _on_inventory_registered(inventory: InventoryModel) -> void:
+func _on_inventory_registered(inventory: BaseInventoryModel) -> void:
 	if inventory.id == InventorySystem.player_inventory:
 		inventory.item_used.connect(_on_item_used)
 	elif inventory.id == "stash":
 		inventory.item_used.connect(_on_item_used)
 
-func _on_inventory_unregistered(inventory: InventoryModel) -> void:
+func _on_inventory_unregistered(inventory: BaseInventoryModel) -> void:
 	if inventory.id == InventorySystem.player_inventory:
 		inventory.item_used.disconnect(_on_item_used)
 	elif inventory.id == "stash":

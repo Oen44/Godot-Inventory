@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bgd5cjgkmofrp"]
+
+[node name="EquippedSectionLabel" type="RichTextLabel" unique_id=1994284808]
+offset_right = 1.0
+theme_override_colors/default_color = Color(0.7708395, 0.77083945, 0.77083945, 1)
+theme_override_font_sizes/normal_font_size = 11
+bbcode_enabled = true
+fit_content = true
+scroll_active = false
+autowrap_mode = 0

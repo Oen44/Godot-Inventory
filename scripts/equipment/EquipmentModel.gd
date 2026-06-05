@@ -12,6 +12,8 @@ signal item_unequipped(item: Item)
 var items: Dictionary[ItemBase.SlotType, Item] = {} ## Maps slot type to equipped InventoryItem
 
 func _ready():
+	InventorySystem.register_inventory(self)
+
 	for slot_type in slots.keys():
 		var slot = slots[slot_type]
 		slot.slot_clicked.connect(_on_slot_clicked)
@@ -19,6 +21,7 @@ func _ready():
 	_load()
 
 func _exit_tree():
+	InventorySystem.unregister_inventory(self)
 	_save()
 
 func _on_slot_clicked(slot: EquipmentSlot, button: MouseButton) -> void:
@@ -117,6 +120,9 @@ func remove_item_at(slot_type: ItemBase.SlotType) -> void:
 		slot.remove_item()
 		items.erase(slot_type)
 
+func get_item_at(slot_type: ItemBase.SlotType) -> Item:
+	return items.get(slot_type)
+
 func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
 	items[slot_type] = equipment_item.item
 	slots[slot_type].set_item(equipment_item)
@@ -125,7 +131,7 @@ func _add_item(equipment_item: InventoryItem, slot_type: ItemBase.SlotType):
 	item_equipped.emit(equipment_item.item)
 
 func _save() -> void:
-	var save_path = "user://player_equipment.inv"
+	var save_path = "user://%s.inv" % id
 	var file = FileAccess.open(save_path, FileAccess.WRITE)
 	if not file:
 		return
@@ -139,7 +145,7 @@ func _save() -> void:
 	file.close()
 
 func _load() -> void:
-	var save_path = "user://player_equipment.inv"
+	var save_path = "user://%s.inv" % id
 	var file = FileAccess.open(save_path, FileAccess.READ)
 	if not file:
 		return

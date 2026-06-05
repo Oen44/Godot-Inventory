@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://mkhh65l2m5wv"]
 
-[node name="DescriptionSectionLabel" type="RichTextLabel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="DescriptionSectionLabel" type="RichTextLabel" unique_id=1286250147]
 theme_override_colors/default_color = Color(0.7792914, 0.7792914, 0.7792913, 1)
 theme_override_font_sizes/italics_font_size = 14
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+autowrap_mode = 0

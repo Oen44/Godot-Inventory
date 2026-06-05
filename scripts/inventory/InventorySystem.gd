@@ -3,8 +3,8 @@ extends Control
 ##
 ## Handles base _items and moving _items between inventories.
 
-signal inventory_registered(inventory: InventoryModel) # Emitted when a new inventory is registered with the system.
-signal inventory_unregistered(inventory: InventoryModel) # Emitted when an inventory is unregistered from the system.
+signal inventory_registered(inventory: BaseInventoryModel) # Emitted when a new inventory is registered with the system.
+signal inventory_unregistered(inventory: BaseInventoryModel) # Emitted when an inventory is unregistered from the system.
 
 @export var items_path: String = "res://items/" # Directory where ItemBase resources are located.
 @export var player_inventory: String = "player_inventory" # ID of the player's inventory.
@@ -16,7 +16,7 @@ signal inventory_unregistered(inventory: InventoryModel) # Emitted when an inven
 var _items: Dictionary[String, ItemBase] = {}
 var _currency_item: ItemBase = null
 
-var _inventories: Dictionary[String, InventoryModel] = {}
+var _inventories: Dictionary[String, BaseInventoryModel] = {}
 
 func _enter_tree():
 	_load_items()
@@ -35,7 +35,7 @@ func _input(event):
 		_move_held_item()
 
 ## Registers a new inventory with the system.
-func register_inventory(inventory: InventoryModel) -> void:
+func register_inventory(inventory: BaseInventoryModel) -> void:
 	if _inventories.has(inventory.id):
 		push_warning("Inventory with ID %s is already registered." % inventory.id)
 		return
@@ -43,7 +43,7 @@ func register_inventory(inventory: InventoryModel) -> void:
 	inventory_registered.emit(inventory)
 
 ## Unregisters an inventory from the system.
-func unregister_inventory(inventory: InventoryModel) -> void:
+func unregister_inventory(inventory: BaseInventoryModel) -> void:
 	if not _inventories.has(inventory.id):
 		push_warning("Inventory with ID %s is not registered." % inventory.id)
 		return
@@ -57,6 +57,10 @@ func get_inventory(inventory_id: String) -> InventoryModel:
 ## Convenience method for accessing the player's inventory
 func get_player_inventory() -> InventoryModel:
 	return get_inventory(player_inventory)
+
+## Convenience method for accessing the equipment inventory
+func get_equipment() -> EquipmentModel:
+	return _inventories.get("player_equipment")
 
 ## Loads all ItemBase resources from the items_path directory.
 func _load_items():

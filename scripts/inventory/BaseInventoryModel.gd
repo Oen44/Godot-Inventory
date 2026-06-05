@@ -2,6 +2,8 @@ class_name BaseInventoryModel
 extends Control
 ## Base class for inventory models, providing common functionality for different inventory types.
 
+@export var id: String = "inventory" ## Unique identifier for this inventory, used for saving.
+
 ## Stacks item A with item B, if item B can be stacked with item A
 func stack_items(item_a: Item, item_b: Item) -> bool:
 	if not item_a.base.stackable or not item_b.base.stackable:

@@ -12,7 +12,6 @@ signal item_added(item: Item, slot_index: int) ## Emitted when an item is added 
 signal item_removed(slot_index: int) ## Emitted when an item is removed from the inventory.
 signal item_used(inventory_item: InventoryItem) ## Emitted when an item is used (right-clicked) from the inventory.
 
-@export var id: String = "inventory" ## Unique identifier for this inventory, used for saving.
 @export var config: InventoryConfig ## Configuration for this inventory
 
 var _quantity_selector: QuantitySelector ## Reference to the QuantitySelector UI, used for splitting stacks

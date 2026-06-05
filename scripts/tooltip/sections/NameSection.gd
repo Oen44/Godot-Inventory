@@ -7,4 +7,7 @@ func applies_to(_item: Item) -> bool:
 	return true
 
 func append(item: Item, tooltip: ItemTooltip) -> void:
-	tooltip.add_line(item.base.name, label_path)
+	if tooltip.equipped_panel.visible:
+		tooltip.add_line("%s (Equipped)" % item.base.name, label_path)
+	else:
+		tooltip.add_line(item.base.name, label_path)

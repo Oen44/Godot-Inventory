@@ -1,9 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://dr7liessjpvcn"]
+[gd_scene format=3 uid="uid://dr7liessjpvcn"]
 
 [ext_resource type="Script" uid="uid://46gxrr5i6q3f" path="res://scripts/equipment/EquipmentModel.gd" id="1_hyj06"]
 [ext_resource type="PackedScene" uid="uid://7oswlw660qvn" path="res://scenes/equipment_slot.tscn" id="2_vnkas"]
 
-[node name="PlayerEquipment" type="PanelContainer" node_paths=PackedStringArray("slots") groups=["PlayerEquipment"]]
+[node name="PlayerEquipment" type="PanelContainer" unique_id=2139176851 node_paths=PackedStringArray("slots") groups=["PlayerEquipment"]]
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
@@ -14,27 +14,28 @@ offset_bottom = 373.0
 grow_horizontal = 0
 script = ExtResource("1_hyj06")
 slots = {
-1: NodePath(""),
-2: NodePath(""),
-3: NodePath(""),
-4: NodePath(""),
-5: NodePath(""),
-6: NodePath(""),
-7: NodePath(""),
-8: NodePath("")
+1: null,
+2: null,
+3: null,
+4: null,
+5: null,
+6: null,
+7: null,
+8: null
 }
+id = "player_equipment"
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=698191489]
 layout_mode = 2
 theme_override_constants/margin_left = 5
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_right = 5
 theme_override_constants/margin_bottom = 5
 
-[node name="Control" type="Control" parent="MarginContainer"]
+[node name="Control" type="Control" parent="MarginContainer" unique_id=1505007815]
 layout_mode = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Control" unique_id=1898594010]
 layout_mode = 1
 anchors_preset = 9
 anchor_bottom = 1.0
@@ -42,23 +43,23 @@ offset_right = 34.0
 grow_vertical = 2
 alignment = 1
 
-[node name="Head" parent="MarginContainer/Control/VBoxContainer" instance=ExtResource("2_vnkas")]
+[node name="Head" parent="MarginContainer/Control/VBoxContainer" unique_id=1035422048 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 1
 
-[node name="Chest" parent="MarginContainer/Control/VBoxContainer" instance=ExtResource("2_vnkas")]
+[node name="Chest" parent="MarginContainer/Control/VBoxContainer" unique_id=2719589 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 2
 
-[node name="Legs" parent="MarginContainer/Control/VBoxContainer" instance=ExtResource("2_vnkas")]
+[node name="Legs" parent="MarginContainer/Control/VBoxContainer" unique_id=1794288842 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 3
 
-[node name="Feet" parent="MarginContainer/Control/VBoxContainer" instance=ExtResource("2_vnkas")]
+[node name="Feet" parent="MarginContainer/Control/VBoxContainer" unique_id=1810427235 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 4
 
-[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control"]
+[node name="VBoxContainer2" type="VBoxContainer" parent="MarginContainer/Control" unique_id=1990431525]
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0
@@ -68,18 +69,18 @@ offset_left = -34.0
 grow_horizontal = 0
 grow_vertical = 2
 
-[node name="Neck" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource("2_vnkas")]
+[node name="Neck" parent="MarginContainer/Control/VBoxContainer2" unique_id=337880082 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 7
 
-[node name="Ring" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource("2_vnkas")]
+[node name="Ring" parent="MarginContainer/Control/VBoxContainer2" unique_id=615606151 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 8
 
-[node name="Weapon" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource("2_vnkas")]
+[node name="Weapon" parent="MarginContainer/Control/VBoxContainer2" unique_id=1335872169 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 5
 
-[node name="Shield" parent="MarginContainer/Control/VBoxContainer2" instance=ExtResource("2_vnkas")]
+[node name="Shield" parent="MarginContainer/Control/VBoxContainer2" unique_id=158518324 instance=ExtResource("2_vnkas")]
 layout_mode = 2
 slot_type = 6

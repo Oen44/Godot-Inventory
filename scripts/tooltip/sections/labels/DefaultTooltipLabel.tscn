@@ -1,11 +1,7 @@
 [gd_scene format=3 uid="uid://bpue4c6bamkiq"]
 
-[node name="DefaultTooltipLabel" type="RichTextLabel"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="DefaultTooltipLabel" type="RichTextLabel" unique_id=1577756052]
+offset_right = 1.0
 theme_override_font_sizes/normal_font_size = 14
 theme_override_font_sizes/bold_font_size = 14
 theme_override_font_sizes/bold_italics_font_size = 14
@@ -14,3 +10,4 @@ theme_override_font_sizes/mono_font_size = 14
 bbcode_enabled = true
 fit_content = true
 scroll_active = false
+autowrap_mode = 0
