@@ -10,7 +10,10 @@ extends Resource
 @export var price_multiplier: float = 1.0 ## Multiplies the item's price by this amount when the affix is present. 1.0 means no change, 2.0 means double price, etc.
 
 func can_apply_to(_item: Item) -> bool:
-    return true
+	return true
 
 func roll(_item: Item) -> AffixInstance:
-    return null
+	return null
+
+func range(_index: int) -> String:
+	return ""

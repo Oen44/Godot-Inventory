@@ -2,6 +2,13 @@
 
 [ext_resource type="Script" uid="uid://bgffi58denc1f" path="res://scripts/tooltip/ItemTooltip.gd" id="1_3gh8j"]
 
+[sub_resource type="InputEventKey" id="InputEventKey_3gh8j"]
+device = -1
+keycode = 4194328
+
+[sub_resource type="Shortcut" id="Shortcut_704uw"]
+events = [SubResource("InputEventKey_3gh8j")]
+
 [node name="ItemTooltip" type="Control" unique_id=998602863 node_paths=PackedStringArray("container", "margin_container")]
 visible = false
 layout_mode = 3
@@ -15,6 +22,7 @@ script = ExtResource("1_3gh8j")
 container = NodePath("PanelContainer/MarginContainer/VBoxContainer")
 margin_container = NodePath("PanelContainer/MarginContainer")
 max_width = 400
+advanced_shortcut = SubResource("Shortcut_704uw")
 
 [node name="PanelContainer" type="PanelContainer" parent="." unique_id=234062995]
 layout_mode = 1

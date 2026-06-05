@@ -12,7 +12,7 @@ func applies_to(item: Item) -> bool:
 func append(item: Item, tooltip: ItemTooltip) -> void:
 	tooltip.add_spacer()
 	for affix_instance in item.affixes:
-		var affix = AffixPool.get_affix(affix_instance.id)
+		var affix: AffixDefinition = AffixPool.get_affix(affix_instance.id)
 		if affix.hidden:
 			continue
 		
@@ -27,7 +27,12 @@ func append(item: Item, tooltip: ItemTooltip) -> void:
 			push_error("Number of values does not match number of placeholders in attribute name")
 			continue
 		
-		for value in affix_instance.values:
-			description = regex.sub(description, "%s" % str(value))
+		for i in range(affix_instance.values.size()):
+			var value = affix_instance.values[i]
+			var value_range = affix.range(i)
+			if tooltip.show_advanced and not value_range.is_empty():
+				description = regex.sub(description, "%s (%s)" % [str(value), value_range])
+			else:
+				description = regex.sub(description, "%s" % str(value))
 		
 		tooltip.add_line(description, label_path)

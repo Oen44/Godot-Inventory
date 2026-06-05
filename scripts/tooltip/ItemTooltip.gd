@@ -7,8 +7,10 @@ extends Control
 @export var margin_container: MarginContainer
 @export var max_width: int = 300
 @export var default_label: PackedScene = preload("res://scripts/tooltip/sections/labels/DefaultTooltipLabel.tscn")
+@export var advanced_shortcut: Shortcut
 
-var _show_advanced: bool = false
+var _current_item: InventoryItem = null
+var show_advanced: bool = false
 
 var sections: Array[TooltipSection] = [
 	NameSection.new(),
@@ -27,13 +29,19 @@ func _ready():
 	canvas_layer.call_deferred("add_child", self)
 
 func _unhandled_key_input(event):
-	if event is InputEventKey:
-		if event.keycode == Key.KEY_ALT:
-			if _show_advanced != event.pressed:
-				_show_advanced = event.pressed
+	if not event.is_echo() and advanced_shortcut.matches_event(event):
+		if show_advanced != event.pressed:
+			show_advanced = event.pressed
+			if _current_item:
+				inspect(_current_item)
+
+func close():
+	visible = false
+	_current_item = null
 
 func inspect(inventory_item: InventoryItem) -> void:
 	visible = true
+	_current_item = inventory_item
 
 	for child in container.get_children():
 		child.free()

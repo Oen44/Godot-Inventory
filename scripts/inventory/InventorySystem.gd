@@ -119,7 +119,7 @@ func on_item_hover(inventory_item: InventoryItem, hovered: bool) -> void:
 	if hovered:
 		ItemTooltip.inspect(inventory_item)
 	else:
-		ItemTooltip.hide()
+		ItemTooltip.close()
 
 ## Retrieves a base item by its ID.
 func get_item_base(item_id: String) -> ItemBase:
