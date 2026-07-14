@@ -8,3 +8,4 @@
 /scenes/**    !export-ignore
 /example    !export-ignore
 /example/**    !export-ignore
+/LICENSE    !export-ignore
