@@ -64,18 +64,8 @@ func get_equipment() -> EquipmentModel:
 
 ## Loads all ItemBase resources from the items_path directory.
 func _load_items():
-	var dir = DirAccess.open(items_path)
-	if not dir:
-		push_error("Failed to open items directory.")
-		return
-	
-	dir.list_dir_begin()
-	var file_name = dir.get_next()
-	while not file_name.is_empty():
-		if dir.current_is_dir():
-			file_name = dir.get_next()
-			continue
-
+	var item_files: PackedStringArray = ResourceLoader.list_directory(items_path)
+	for file_name in item_files:
 		if file_name.ends_with(".tres") or file_name.ends_with(".res"):
 			var item_path = items_path + file_name
 			var item_resource = ResourceLoader.load(item_path)
@@ -87,9 +77,6 @@ func _load_items():
 			else:
 				push_warning("Failed to load ItemBase from %s" % item_path)
 
-		file_name = dir.get_next()
-
-	dir.list_dir_end()
 	print("Loaded %d base items." % _items.size())
 
 ## Picks up an item to be held by the cursor.
